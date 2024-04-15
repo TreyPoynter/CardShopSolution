@@ -1,6 +1,9 @@
-﻿using CardShop.Models.Domain;
+﻿using CardShop.Data.Configurations;
+using CardShop.Models.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace CardShop.Data
 {
@@ -17,5 +20,21 @@ namespace CardShop.Data
         public DbSet<Quality> Qualities { get; set; }
         public DbSet<Rarity> Rarities { get; set; }
         public DbSet<Sport> Sports { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new CardConfig());
+            builder.ApplyConfiguration(new CardTypeConfig());
+            builder.ApplyConfiguration(new PurchaseConfig());
+            builder.ApplyConfiguration(new QualityConfig());
+            builder.ApplyConfiguration(new RarityConfig());
+            builder.ApplyConfiguration(new SportConfig());
+
+            builder.Ignore<IdentityUserLogin<string>>();
+            builder.Ignore<IdentityUserRole<string>>();
+            builder.Ignore<IdentityUserToken<string>>();
+            builder.Ignore<IdentityUserRole<string>>();
+            builder.Ignore<IdentityUserRole<string>>();
+        }
     }
 }
