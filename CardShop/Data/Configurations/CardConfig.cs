@@ -8,7 +8,8 @@ namespace CardShop.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Card> builder)
         {
-
+            builder.HasMany(c => c.Purchases)
+                .WithOne(p => p.CardBought);
         }
     }
 }
