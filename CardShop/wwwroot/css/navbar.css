@@ -3,6 +3,8 @@
     font-weight: 600;
 }
 
+
+
 #nav-icons {
     display: flex;
     flex-direction: row
@@ -36,4 +38,7 @@
         #nav-items > .nav-item > .nav-link:hover::after {
             transform: scaleX(1); /* Expand the line to full width on hover */
         }
+    .navbar {
+        padding-top: 0px !important;
+    }
 }
