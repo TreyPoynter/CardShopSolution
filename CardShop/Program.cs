@@ -51,7 +51,7 @@ using(IServiceScope scope = scopeFactory.CreateScope())
 app.MapAreaControllerRoute(
     name: "identity",
     areaName: "Identity",
-    pattern: "Identity/{controller=Account}/{action=Register}/{id?}");
+    pattern: "Identity/{controller=Account}/{action=Index}/{id?}");
 app.MapAreaControllerRoute(
     name: "admin",
     areaName: "Admin",
