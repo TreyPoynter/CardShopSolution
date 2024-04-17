@@ -23,18 +23,14 @@ namespace CardShop.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.ApplyConfiguration(new CardConfig());
             builder.ApplyConfiguration(new CardTypeConfig());
             builder.ApplyConfiguration(new PurchaseConfig());
             builder.ApplyConfiguration(new QualityConfig());
             builder.ApplyConfiguration(new RarityConfig());
             builder.ApplyConfiguration(new SportConfig());
-
-            builder.Ignore<IdentityUserLogin<string>>();
-            builder.Ignore<IdentityUserRole<string>>();
-            builder.Ignore<IdentityUserToken<string>>();
-            builder.Ignore<IdentityUserRole<string>>();
-            builder.Ignore<IdentityUserRole<string>>();
         }
     }
 }
