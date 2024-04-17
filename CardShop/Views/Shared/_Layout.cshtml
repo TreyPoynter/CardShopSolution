@@ -13,37 +13,72 @@
 </head>
 <body>
     <header>
-        <div class="border-bottom" id="contact">
-            <div class="container pb-2">
-                <div class="d-flex justify-content-end align-items-center">
-                    <i class="fa-regular fa-envelope mt-1"></i>
-                    <p class="mb-0 ms-2">dgegs@charter.net</p>
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-white border-bottom flex-column pb-0" id="navbar">
+            <div class="container-fluid border-bottom" id="upper-nav">
+                <div class="container py-3 d-flex justify-content-between">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Five Star Sports Cards</a>
+                    <partial name="_LoginPartial" />
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
                 </div>
             </div>
-        </div>
-        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-white border-bottom" id="navbar">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Five Star Sports Cards</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 py-3 justify-content-center" id="nav-items">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Cards &amp; Boxes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">About Me</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Contact</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+            <div class="container-fluid border-bottom" id="middle-nav">
+                <div class="container">
+                    <!-- New container to hold the nav-items section -->
+                    <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1 py-1 justify-content-around align-items-center">
+                            <li class="nav-item" id="home-link">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Baseball Cards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Basketball Cards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Football Cards</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Autographed Cards</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" id="bottom-nav">
+                <div class="container py-1">
+                    <div class="row justify-content-between">
+                        <div class="col-md-4">
+                            <div class="dropdown">
+                                <button class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-layer-group me-2"></i>
+                                    Categories
+                                </button>
+                                <ul class="dropdown-menu w-50" id="nav-dropdown">
+                                    <li><a class="dropdown-item" href="#">Baseball</a></li>
+                                    <li><a class="dropdown-item" href="#">Football</a></li>
+                                    <li><a class="dropdown-item" href="#">Hockey</a></li>
+                                    <li><a class="dropdown-item" href="#">Golf</a></li>
+                                    <li><a class="dropdown-item" href="#">Wrestling</a></li>
+                                    <li><a class="dropdown-item" href="#">Racing</a></li>
+                                    <li><a class="dropdown-item" href="#">Boxing</a></li>
+                                    <li><a class="dropdown-item" href="#">MMA</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search Products..." >
+                                <button class="btn btn-dark" type="button" id="button-addon2">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>

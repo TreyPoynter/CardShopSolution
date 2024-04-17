@@ -1,12 +1,16 @@
 ﻿window.addEventListener("scroll", () => {
-    const navbar = document.getElementById("navbar");
-    const navItems = document.getElementById("nav-items");
+    const nav = document.getElementById("navbar")
+    const upper = document.getElementById("upper-nav");
+    const middle = document.getElementById("middle-nav");
+    const below = document.getElementById("bottom-nav");
 
-    if (window.scrollY >= 33) {
-        navbar.classList.add("fixed-top");
-        navItems.classList.remove("py-3");
+    if (window.scrollY >= 124) {
+        upper.classList.add("invisable");
+        below.classList.add("invisable");
+        nav.classList.add("fixed-top")
     } else {
-        navbar.classList.remove("fixed-top");
-        navItems.classList.add("py-3");
+        upper.classList.remove("invisable");
+        below.classList.remove("invisable");
+        nav.classList.remove("fixed-top")
     }
 });
