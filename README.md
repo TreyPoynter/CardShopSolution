@@ -21,3 +21,5 @@ Make sure you have the following NuGet packages installed:
 `Admin:LastName`
 
 `Admin:Password`
+
+`Admin:Email`
