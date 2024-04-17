@@ -43,15 +43,21 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
-using(var scope = scopeFactory.CreateScope())
+IServiceScopeFactory? scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using(IServiceScope scope = scopeFactory.CreateScope())
 {
     await ConfigureIdentity.CreateAdminUserAsync(scope.ServiceProvider, builder.Configuration);
 }
-
+app.MapAreaControllerRoute(
+    name: "identity",
+    areaName: "Identity",
+    pattern: "Identity/{controller=Account}/{action=Register}/{id?}");
+app.MapAreaControllerRoute(
+    name: "admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
 
 app.Run();
