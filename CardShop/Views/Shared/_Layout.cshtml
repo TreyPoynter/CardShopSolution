@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var current = ViewContext.RouteData.Values["area"]?.ToString() ??
+                ViewContext.RouteData.Values["controller"]!.ToString() ?? "";
+
+    string Active(string value)
+    {
+        string id = Context.Request.Path.ToString();
+        return id.Contains(value) ? "active" : "";
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,19 +39,24 @@
                     <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1 py-1 justify-content-around align-items-center" id="links">
                             <li class="nav-item" id="home-link">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark @Nav.Active("Home", current)" asp-controller="Home" 
+                                asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Baseball Cards</a>
+                                <a class="nav-link text-dark @Active("Baseball")" asp-controller="Card"
+                                   asp-action="Index" asp-route-id="Baseball">Baseball Cards</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Basketball Cards</a>
+                                <a class="nav-link text-dark @Active("Basketball")" asp-controller="Card"
+                                   asp-action="Index" asp-route-id="Basketball">Basketball Cards</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Football Cards</a>
+                                <a class="nav-link text-dark @Active("Football")" asp-controller="Card"
+                                   asp-action="Index" asp-route-id="Football">Football Cards</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Autographed Cards</a>
+                                <a class="nav-link text-dark @Active("Autographed")" asp-controller="Card"
+                                   asp-action="Index" asp-route-id="Autographed">Autographed Cards</a>
                             </li>
                         </ul>
                     </div>
