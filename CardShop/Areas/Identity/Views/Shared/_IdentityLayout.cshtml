@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var current = ViewContext.RouteData.Values["area"]?.ToString() ??
+        ViewContext.RouteData.Values["controller"]!.ToString() ?? "";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +32,7 @@
                 <div class="container">
                     <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1 py-1 justify-content-around align-items-center" id="links">
-                            <li class="nav-item" id="home-link">
+                            <li class="nav-item @Nav.Active("Home", current)" id="home-link">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
