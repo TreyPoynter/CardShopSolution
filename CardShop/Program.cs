@@ -48,10 +48,7 @@ using(IServiceScope scope = scopeFactory.CreateScope())
 {
     await ConfigureIdentity.CreateAdminUserAsync(scope.ServiceProvider, builder.Configuration);
 }
-app.MapAreaControllerRoute(
-    name: "identity",
-    areaName: "Identity",
-    pattern: "Identity/{controller=Account}/{action=Index}/{id?}");
+
 app.MapAreaControllerRoute(
     name: "admin",
     areaName: "Admin",
