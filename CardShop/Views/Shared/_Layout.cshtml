@@ -14,7 +14,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-white border-bottom flex-column pb-0" id="navbar">
-            <div class="container-fluid border-bottom" id="upper-nav">
+            <div class="container-fluid border-bottom bg-light" id="upper-nav">
                 <div class="container py-3 d-flex justify-content-between">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Five Star Sports Cards</a>
                     <partial name="_LoginPartial" />
@@ -24,11 +24,10 @@
                     </button>
                 </div>
             </div>
-            <div class="container-fluid border-bottom" id="middle-nav">
+            <div class="container-fluid border-bottom bg-light" id="middle-nav">
                 <div class="container">
-                    <!-- New container to hold the nav-items section -->
                     <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1 py-1 justify-content-around align-items-center">
+                        <ul class="navbar-nav flex-grow-1 py-1 justify-content-around align-items-center" id="links">
                             <li class="nav-item" id="home-link">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
@@ -53,7 +52,7 @@
                     <div class="row justify-content-between">
                         <div class="col-md-4">
                             <div class="dropdown">
-                                <button class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                <button id="categories" class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
                                     <i class="fa-solid fa-layer-group me-2"></i>
                                     Categories
                                 </button>
