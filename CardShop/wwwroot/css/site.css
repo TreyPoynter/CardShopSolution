@@ -28,6 +28,12 @@ body {
     background-color: #276459;
     border-color: #276459;
 }
+.jumbotron-text>.btn-secondary {
+    font-size: 21px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+
+}
     .btn-secondary:hover {
         background-color: #2e8575;
         border-color: #2e8575;
@@ -37,4 +43,36 @@ body {
     html {
         font-size: 16px;
     }
+}
+
+
+
+/* This is the callable Link to his phone number
+.gegelman-phonenumber {
+    text-decoration: none;
+    color: #212529;
+}
+    .gegelman-phonenumber:hover, .gegelman-phonenumber:focus {
+        text-decoration: none;
+        color: #212529;
+    }
+     */
+
+
+
+
+.card-img-top {
+    border-radius: 8px !important;
+}
+
+.card {
+    border: none !important;
+}
+
+.card-img-top {
+    transition: transform 0.3s ease; /* Smooth transition on transform */
+}
+
+.img-link:hover .card-img-top {
+    transform: scale(1.05); /* Zoom effect on hover */
 }

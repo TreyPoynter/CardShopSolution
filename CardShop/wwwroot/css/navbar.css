@@ -8,7 +8,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Adjust as needed */
+    z-index: 1000;
 }
 
 a.dropdown-item {
@@ -37,6 +37,9 @@ a.dropdown-item {
     }
     #categories {
         margin-bottom: .5em;
+    }
+    #middle-nav.border-bottom {
+        border-bottom: none !important;
     }
 }
 @media only screen and (max-width: 991px) {
