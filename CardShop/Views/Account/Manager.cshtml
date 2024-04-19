@@ -3,23 +3,30 @@
     ViewBag.Title = "Account Manager";
 }
 
-<div class="container">
+<div class="container mt-2">
     <h2>Account Manager</h2>
-    <div>
-        <div>
-            <a class="fs-1" asp-action="Index">Change Password</a>
-        </div>
-        
-    </div>
+    <ul class="list-group mb-2">
+        <li class="list-group-item">
+            <a class="fs-4 text-decoration-none text-dark" asp-action="ChangePassword" asp-controller="Account">Change Password</a>
+        </li>
+    </ul>
     @if (User.IsInRole("Admin"))
     {
         <h2>Admin</h2>
-        <div>
-            <div>
-                <a class="fs-1" asp-route="Admin">Admin Route</a>
-            </div>
-
-        </div>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a class="fs-4 text-decoration-none text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Home</a>
+            </li>
+            <li class="list-group-item">
+                <a class="fs-4 text-decoration-none text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Manage Users</a>
+            </li>
+            <li class="list-group-item">
+                <a class="fs-4 text-decoration-none text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Manage Roles</a>
+            </li>
+            <li class="list-group-item">
+                <a class="fs-4 text-decoration-none text-dark" asp-area="Admin" asp-controller="Home" asp-action="Index">Manage Products</a>
+            </li>
+        </ul>
     }
     
 </div>

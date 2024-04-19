@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    var current = ViewContext.RouteData.Values["area"]?.ToString() ??
+                ViewContext.RouteData.Values["controller"]!.ToString() ?? "";
+
+    string Active(string value)
+    {
+        string id = Context.Request.Path.ToString();
+        return id.Contains(value) ? "active" : "";
+    }
 }
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Five Star Sports Cards : Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/navbar.css" />
+    <link rel="stylesheet" href="~/css/jumbotron.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CardShop.styles.css" asp-append-version="true" />
+    <script async src="https://kit.fontawesome.com/58b7281dd9.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-white border-bottom flex-column pb-0" id="navbar">
+            <div class="container-fluid border-bottom bg-light" id="upper-nav">
+                <div class="container py-3 d-flex justify-content-between">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Five Star Sports Cards : Admin</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="navbar-nav" >
+                        <li class="nav-item me-4">
+                            <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Index">
+                                Back to Customer View
+                            </a>
+                        </li>
+                        <li class="nav-item me-0">
+                            <form class="form-inline" asp-action="Logout" asp-controller="Account">
+                                <button type="submit" class="nav-link btn btn-link text-black">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container-fluid border-bottom bg-light" id="middle-nav">
+                <div class="container">
+                    <div class="navbar-collapse collapse d-md-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1 py-1 justify-content-around align-items-center" id="links">
+                            <li class="nav-item" id="home-link">
+                                <a class="nav-link text-dark @Active("/Admin")" asp-controller="Home"
+                                   asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Card"
+                                   asp-action="Index" asp-route-id="Baseball">Manage Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Card"
+                                   asp-action="Index" asp-route-id="Basketball">Manage Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Card"
+                                   asp-action="Index" asp-route-id="Football">Manage Products</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/js/navbarTransition.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
