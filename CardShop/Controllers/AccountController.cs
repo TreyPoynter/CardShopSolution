@@ -1,5 +1,6 @@
 ﻿using CardShop.Models.Domain;
 using CardShop.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
@@ -78,6 +79,19 @@ namespace CardShop.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public IActionResult Manager()
+        {
+            return View();
         }
     }
 }

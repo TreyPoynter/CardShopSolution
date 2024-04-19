@@ -1,0 +1,32 @@
+﻿@inject UserManager<User> UserManager
+@{
+    ViewBag.Title = "Account Manager";
+}
+
+<div class="container">
+    <h2>Account Manager</h2>
+    <div>
+        <div>
+            <a class="fs-1" asp-action="Index">Change Password</a>
+        </div>
+        
+    </div>
+    @if (User.IsInRole("Admin"))
+    {
+        <h2>Admin</h2>
+        <div>
+            <div>
+                <a class="fs-1" asp-route="Admin">Admin Route</a>
+            </div>
+
+        </div>
+    }
+    
+</div>
+
+
+
+
+
+
+
