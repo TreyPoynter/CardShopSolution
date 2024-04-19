@@ -29,7 +29,8 @@ namespace CardShop.Models.Utilities
                 {
                     FirstName = firstName,
                     LastName = lastName,
-                    Email = email
+                    Email = email,
+                    UserName = email,
                 };
 
                 var result = await userManager.CreateAsync(user, password);
