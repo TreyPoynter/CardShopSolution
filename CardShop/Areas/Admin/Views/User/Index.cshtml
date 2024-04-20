@@ -1,4 +1,4 @@
-﻿@model UserManagerVM
+﻿@model SearchVM<User>
 @{
 }
 
@@ -16,7 +16,7 @@
 @if(Model.Search != String.Empty)
 {
     <div>
-        <p>@Model.Users.Count() results for @Model.Search</p>
+        <p>@Model.Items.Count() results for @Model.Search</p>
     </div>
 }
 
@@ -29,7 +29,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (User user in Model.Users)
+        @foreach (User user in Model.Items)
         {
             <tr>
                 <td>@user.FullName</td>
