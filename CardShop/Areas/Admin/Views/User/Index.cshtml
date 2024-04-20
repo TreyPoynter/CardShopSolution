@@ -1,5 +1,23 @@
-﻿@model List<User>
+﻿@model UserManagerVM
 @{
+}
+
+<div class="mt-3">
+    <form method="post" asp-route-search="@Model.Search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search Users..." asp-for="Search">
+            <button class="btn btn-dark" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+@if(Model.Search != String.Empty)
+{
+    <div>
+        <p>@Model.Users.Count() results for @Model.Search</p>
+    </div>
 }
 
 <table class="table">
@@ -11,19 +29,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (User user in Model)
+        @foreach (User user in Model.Users)
         {
             <tr>
                 <td>@user.FullName</td>
                 <td>@user.Email</td>
-                <td>
-                    <form method="post" asp-action="Delete"
-                          asp-route-id="@user.Id">
-                        <button class="btn btn-danger" type="submit">
-                            Delete User
-                        </button>
-                    </form>
-                </td>
             </tr>
         }
     </tbody>

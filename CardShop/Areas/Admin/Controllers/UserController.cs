@@ -1,4 +1,5 @@
-﻿using CardShop.Models.Domain;
+﻿using CardShop.Areas.Admin.Models.ViewModels;
+using CardShop.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +20,17 @@ namespace CardShop.Areas.Admin.Controllers
         [Route("{area}/Users")]
         public async Task<IActionResult> Index(string search = "")
         {
-            List<User> users = await _userManager.Users.ToListAsync();
+            UserManagerVM model = new UserManagerVM()
+            {
+                Search = search,
+                Users = _userManager.Users
+            }; 
 
             if(search != String.Empty)
-                users = users.Where(u => u.FirstName.Contains(search) || u.LastName.Contains(search))
+                model.Users = model.Users.Where(u => u.FirstName.Contains(search) || u.LastName.Contains(search))
                     .ToList();
-
-            return View(users);
+            
+            return View(model);
         }
     }
 }
