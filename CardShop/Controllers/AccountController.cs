@@ -126,5 +126,8 @@ namespace CardShop.Controllers
             }
             return View(model);
         }
+
+        [Authorize]
+        public IActionResult AccessDenied() => View();
     }
 }
