@@ -5,7 +5,7 @@
     string Active(string value)
     {
         string id = Context.Request.Path.ToString();
-        return id.Contains(value) ? "active" : "";
+        return id == value ? "active" : "";
     }
 }
 
@@ -54,8 +54,8 @@
                                    asp-action="Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Card"
-                                   asp-action="Index" asp-route-id="Baseball">Manage Users</a>
+                                <a class="nav-link text-dark @Active("/Admin/Users")" asp-area="Admin" asp-controller="User"
+                                   asp-action="Index">Manage Users</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Card"

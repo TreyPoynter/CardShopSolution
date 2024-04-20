@@ -1,0 +1,30 @@
+﻿@model List<User>
+@{
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (User user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td>
+                    <form method="post" asp-action="Delete"
+                          asp-route-id="@user.Id">
+                        <button class="btn btn-danger" type="submit">
+                            Delete User
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
