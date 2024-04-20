@@ -93,5 +93,36 @@ namespace CardShop.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            ChangePasswordVM vm = new ChangePasswordVM() 
+            {
+                Email = User.Identity.Name
+            };
+            return View(vm);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordVM model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            User? user = await _userManager.FindByNameAsync(model.Email);
+
+            var result = await _userManager.ChangePasswordAsync(user,
+                model.OldPassword, model.NewPassword);
+
+            if (result.Succeeded)
+                return RedirectToAction("Manager");
+            foreach(var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View(model);
+        }
     }
 }
