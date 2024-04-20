@@ -1,0 +1,11 @@
+﻿@model Card
+@{
+    ViewBag.Title = $"Add {nameof(Model)}";
+}
+
+<div class="container mt-3">
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Player, new {@class="form-control", @placeholder=""})
+        @Html.LabelFor(m => m.Player)
+    </div>
+</div>

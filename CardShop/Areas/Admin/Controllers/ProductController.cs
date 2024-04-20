@@ -34,5 +34,10 @@ namespace CardShop.Areas.Admin.Controllers
 
             return View(model);
         }
+        [Route("{area}/Product/Add")]
+        public IActionResult Add()
+        {
+            return View(new Card());
+        }
     }
 }
