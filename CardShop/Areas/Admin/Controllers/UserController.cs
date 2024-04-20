@@ -1,5 +1,6 @@
 ﻿using CardShop.Areas.Admin.Models.ViewModels;
 using CardShop.Models.Domain;
+using CardShop.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,8 @@ namespace CardShop.Areas.Admin.Controllers
             }; 
 
             if(search != String.Empty)
-                model.Users = model.Users.Where(u => u.FirstName.Contains(search) || u.LastName.Contains(search))
-                    .ToList();
+                model.Users = model.Users.Where(u => u.LastName.ContainsNoCase(search) 
+                    || u.FirstName.ContainsNoCase(search)).ToList();
             
             return View(model);
         }
