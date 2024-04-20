@@ -2,9 +2,9 @@
 
 namespace CardShop.Areas.Admin.Models.ViewModels
 {
-    public class UserManagerVM
+    public class SearchVM<T> where T : class
     {
-        public IEnumerable<User> Users { get; set; } = null!;
+        public IEnumerable<T> Items { get; set; } = null!;
         public string? Search { get; set; }
     }
 }
