@@ -21,14 +21,14 @@ namespace CardShop.Areas.Admin.Controllers
         [Route("{area}/Users")]
         public async Task<IActionResult> Index(string search = "")
         {
-            UserManagerVM model = new UserManagerVM()
+            SearchVM<User> model = new SearchVM<User>()
             {
                 Search = search,
-                Users = _userManager.Users
+                Items = _userManager.Users
             }; 
 
             if(search != String.Empty)
-                model.Users = model.Users.Where(u => u.LastName.ContainsNoCase(search) 
+                model.Items = model.Items.Where(u => u.LastName.ContainsNoCase(search) 
                     || u.FirstName.ContainsNoCase(search)).ToList();
             
             return View(model);
