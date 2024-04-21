@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\imageSelector.css" />
     <_ContentIncludedByDefault Remove="wwwroot\js\navbarTransition.js" />
   </ItemGroup>
 
