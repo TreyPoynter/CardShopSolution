@@ -3,8 +3,15 @@
     font-weight: 600;
     text-align: center;
 }
+.nav-item >form> .nav-link.text-dark {
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+}
 
-
+.mobile-nav-link {
+    display: block;
+}
 
 a.dropdown-item {
     text-transform: uppercase;
@@ -14,7 +21,8 @@ a.dropdown-item {
 
 #nav-icons {
     display: flex;
-    flex-direction: row
+    flex-direction: row;
+    display: none;
 }
 
 @media only screen and (max-width: 767px) {
@@ -77,5 +85,11 @@ a.dropdown-item {
     }
     .navbar {
         padding-top: 0px !important;
+    }
+    #nav-icons {
+        display: flex;
+    }
+    .mobile-nav-link {
+        display: none;
     }
 }

@@ -32,7 +32,7 @@
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <ul class="navbar-nav" >
+                    <ul class="navbar-nav" id="nav-icons">
                         <li class="nav-item me-4">
                             <a class="nav-link text-black" asp-area="" asp-controller="Home" asp-action="Index">
                                 Back to Customer View
@@ -65,6 +65,16 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark @Active("/Admin/Product/Add")" asp-controller="Product"
                                    asp-action="Add">Add Product</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                                    Back to Customer View
+                                </a>
+                            </li>
+                            <li class="nav-item me-0">
+                                <form class="form-inline" asp-area="" asp-action="Logout" asp-controller="Account">
+                                    <button type="submit" class="nav-link btn btn-link text-dark pe-0">Logout</button>
+                                </form>
                             </li>
                         </ul>
                     </div>
