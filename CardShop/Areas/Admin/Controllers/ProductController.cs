@@ -15,12 +15,14 @@ namespace CardShop.Areas.Admin.Controllers
         private Repository<Card> cardDb {  get; set; }
         private Repository<Sport> sportDb {  get; set; }
         private Repository<Manufacturer> manufacturerDb {  get; set; }
+        private Repository<Quality> qualityDb {  get; set; }
 
         public ProductController(ApplicationDbContext ctx)
         {
             cardDb = new Repository<Card>(ctx);
             sportDb = new Repository<Sport>(ctx);
             manufacturerDb = new Repository<Manufacturer>(ctx);
+            qualityDb = new Repository<Quality>(ctx);
         }
 
         [Route("{area}/Products")]
@@ -43,8 +45,10 @@ namespace CardShop.Areas.Admin.Controllers
         {
             CardCreationVM newCard = new CardCreationVM() 
             {
+                Card = new Card(),
                 Sports = sportDb.List(new QueryOptions<Sport>()),
-                Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>())
+                Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>()),
+                Qualities = qualityDb.List(new QueryOptions<Quality>())
             };
 
             return View(newCard);

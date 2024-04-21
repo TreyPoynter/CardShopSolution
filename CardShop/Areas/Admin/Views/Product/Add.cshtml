@@ -5,43 +5,63 @@
 
 <div class="container mt-3">
     <div class="form-floating mb-3">
-        @Html.TextBoxFor(m => m.Player, new {@class="form-control", @placeholder=""})
-        @Html.LabelFor(m => m.Player)
-        @Html.ValidationMessageFor(m => m.Player, "", new{ @class="text-danger"} )
+        @Html.TextBoxFor(m => m.Card.Player, new {@class="form-control", @placeholder=""})
+        @Html.LabelFor(m => m.Card.Player)
+        @Html.ValidationMessageFor(m => m.Card.Player, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
-        @Html.TextAreaFor(m => m.Description, new { @class = "form-control no-resize", @placeholder = "",
+        @Html.TextAreaFor(m => m.Card.Description, new { @class = "form-control no-resize", @placeholder = "",
                 @style = "height: 7em; resize: none;"})
-        @Html.LabelFor(m => m.Description)
-        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+        @Html.LabelFor(m => m.Card.Description)
+        @Html.ValidationMessageFor(m => m.Card.Description, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
-        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "", @type="number" })
-        @Html.LabelFor(m => m.Price)
-        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(m => m.Card.Price, new { @class = "form-control", @placeholder = "", @type = "number" })
+        @Html.LabelFor(m => m.Card.Price)
+        @Html.ValidationMessageFor(m => m.Card.Price, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
-        <select class="form-select" asp-items="@(new SelectList(Model.Sports, "SportId", "Name"))">
+        @Html.TextBoxFor(m => m.Card.Year, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Card.Year)
+        @Html.ValidationMessageFor(m => m.Card.Year, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Card.Number, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Card.Number)
+        @Html.ValidationMessageFor(m => m.Card.Number, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Manufacturers, "ManufacturerId", "Name"))"
+            asp-for="Card.ManufactuererId">
+            <option value="">-- Select a Manufacturer --</option>
+        </select>
+        @Html.LabelFor(m => m.Manufacturers)
+        @Html.ValidationMessageFor(m => m.Manufacturers, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Sports, "SportId", "Name"))"
+            asp-for="Card.SportId">
             <option value="">-- Select a Sport --</option>
         </select>
         @Html.LabelFor(m => m.Sports)
         @Html.ValidationMessageFor(m => m.Sports, "", new { @class = "text-danger" })
     </div>
-    <div class="form-floating mb-3">
-        @Html.TextBoxFor(m => m.Year, new { @class = "form-control", @placeholder = "" })
-        @Html.LabelFor(m => m.Year)
-        @Html.ValidationMessageFor(m => m.Year, "", new { @class = "text-danger" })
+    
+    <div class="file-upload-form">
+        <label for="file" class="file-upload-label">
+            <div class="file-upload-design">
+                <i class="fa-solid fa-image"></i>
+                <p>Drag and Drop</p>
+                <p>or</p>
+                <span class="browse-button">Browse file</span>
+            </div>
+            <input id="file" type="file" />
+        </label>
     </div>
-    <div class="form-floating mb-3">
-        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @placeholder = "" })
-        @Html.LabelFor(m => m.Number)
-        @Html.ValidationMessageFor(m => m.Number, "", new { @class = "text-danger" })
+    <div class="d-flex">
+        <button class="btn btn-primary">Create</button>
+        <button class="btn btn-secondary ms-3">Cancel</button>
     </div>
-    <div class="form-floating mb-3">
-        <select class="form-select" asp-items="@(new SelectList(Model.Manufacturers, "ManufacturerId", "Name"))">
-            <option value="">-- Select a Manufacturer --</option>
-        </select>
-        @Html.LabelFor(m => m.Sports)
-        @Html.ValidationMessageFor(m => m.Sports, "", new { @class = "text-danger" })
-    </div>
+    
+    
 </div>
