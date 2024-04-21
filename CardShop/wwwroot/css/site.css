@@ -2,6 +2,18 @@ html {
   font-size: 14px;
 }
 
+@font-face {
+    font-family: 'barbecue_personal_useregular';
+    src: url('barbecue_personal_use-webfont.woff2') format('woff2'), url('barbecue_personal_use-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+    font-family: barbecue_personal_useregular;
+    font-size: 60px;
+}
+
 .field-validation-error {
     color: #dc3545;
 }
@@ -61,21 +73,6 @@ body {
         font-size: 16px;
     }
 }
-
-
-/* This is the callable Link to his phone number
-.gegelman-phonenumber {
-    text-decoration: none;
-    color: #212529;
-}
-    .gegelman-phonenumber:hover, .gegelman-phonenumber:focus {
-        text-decoration: none;
-        color: #212529;
-    }
-     */
-
-
-
 
 .card-img-top {
     border-radius: 8px !important;
