@@ -1,8 +1,11 @@
 ﻿.file-upload-form {
-    margin: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.file-upload-label {
+    width: 100%;
 }
 
 .file-upload-label input {
