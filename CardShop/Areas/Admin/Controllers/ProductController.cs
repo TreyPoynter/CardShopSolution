@@ -4,7 +4,9 @@ using CardShop.Data.Repository;
 using CardShop.Models;
 using CardShop.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace CardShop.Areas.Admin.Controllers
 {
@@ -12,17 +14,22 @@ namespace CardShop.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {
+        private IWebHostEnvironment webHostEnvironment;
         private Repository<Card> cardDb {  get; set; }
         private Repository<Sport> sportDb {  get; set; }
         private Repository<Manufacturer> manufacturerDb {  get; set; }
         private Repository<Quality> qualityDb {  get; set; }
+        private Repository<CardType> typeDb {  get; set; }
 
-        public ProductController(ApplicationDbContext ctx)
+        public ProductController(ApplicationDbContext ctx, IWebHostEnvironment webHostEnv)
         {
             cardDb = new Repository<Card>(ctx);
             sportDb = new Repository<Sport>(ctx);
             manufacturerDb = new Repository<Manufacturer>(ctx);
             qualityDb = new Repository<Quality>(ctx);
+            typeDb = new Repository<CardType>(ctx);
+            webHostEnvironment = webHostEnv;
+
         }
 
         [Route("{area}/Products")]
@@ -48,10 +55,48 @@ namespace CardShop.Areas.Admin.Controllers
                 Card = new Card(),
                 Sports = sportDb.List(new QueryOptions<Sport>()),
                 Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>()),
-                Qualities = qualityDb.List(new QueryOptions<Quality>())
+                Qualities = qualityDb.List(new QueryOptions<Quality>()),
+                Types = typeDb.List(new QueryOptions<CardType>())
             };
 
             return View(newCard);
+        }
+        [Route("{area}/Product/Add")]
+        [HttpPost]
+        public IActionResult Add(CardCreationVM cardVM)
+        {
+            if (ModelState.IsValid)
+            {
+                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                string fileName = cardVM.Image.FileName;
+                string filePath = Path.Combine(uploadDir, fileName);
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    cardVM.Image.CopyTo(fileStream);
+                }
+
+                Card card = new Card()
+                {
+                    Player = cardVM.Card.Player,
+                    Description = cardVM.Card.Description,
+                    Price = cardVM.Card.Price,
+                    Year = cardVM.Card.Year,
+                    Number = cardVM.Card.Number,
+                    TypeId = cardVM.Card.TypeId,
+                    QualityId = cardVM.Card.QualityId,
+                    ManufactuererId = cardVM.Card.ManufactuererId,
+                    SportId = cardVM.Card.SportId,
+                    ImageName = fileName
+                };
+                cardDb.Add(card);
+                cardDb.Save();
+                return RedirectToAction("Index");
+            }
+            cardVM.Sports = sportDb.List(new QueryOptions<Sport>());
+            cardVM.Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>());
+            cardVM.Qualities = qualityDb.List(new QueryOptions<Quality>());
+            cardVM.Types = typeDb.List(new QueryOptions<CardType>());
+            return View(cardVM);
         }
     }
 }

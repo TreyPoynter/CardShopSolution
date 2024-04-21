@@ -3,7 +3,7 @@
     ViewBag.Title = $"Add Card";
 }
 
-<div class="container mt-3">
+<form class="container mt-3" asp-action="Add" enctype="multipart/form-data">
     <div class="form-floating mb-3">
         @Html.TextBoxFor(m => m.Card.Player, new {@class="form-control", @placeholder=""})
         @Html.LabelFor(m => m.Card.Player)
@@ -36,7 +36,7 @@
             <option value="">-- Select a Manufacturer --</option>
         </select>
         @Html.LabelFor(m => m.Manufacturers)
-        @Html.ValidationMessageFor(m => m.Manufacturers, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.Card.ManufactuererId, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Sports, "SportId", "Name"))"
@@ -44,7 +44,15 @@
             <option value="">-- Select a Sport --</option>
         </select>
         @Html.LabelFor(m => m.Sports)
-        @Html.ValidationMessageFor(m => m.Sports, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.Card.SportId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Types, "TypeId", "Name"))"
+            asp-for="Card.TypeId">
+            <option value="">-- Select a Type --</option>
+        </select>
+        @Html.LabelFor(m => m.Types)
+        @Html.ValidationMessageFor(m => m.Card.TypeId, "", new { @class = "text-danger" })
     </div>
     
     <div class="file-upload-form">
@@ -55,11 +63,11 @@
                 <p>or</p>
                 <span class="browse-button">Browse file</span>
             </div>
-            <input id="file" type="file" onchange="updateFileName(this)" />
+            <input id="file" type="image" onchange="updateFileName(this)" />
         </label>
     </div>
     <div class="d-flex mt-3">
-        <button class="btn btn-primary">Create</button>
-        <button class="btn btn-secondary ms-3">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Index" asp-controller="Product" class="btn btn-secondary ms-3">Cancel</a>
     </div>
-</div>
+</form>
