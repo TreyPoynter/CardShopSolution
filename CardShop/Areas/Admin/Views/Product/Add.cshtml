@@ -55,13 +55,11 @@
                 <p>or</p>
                 <span class="browse-button">Browse file</span>
             </div>
-            <input id="file" type="file" />
+            <input id="file" type="file" onchange="updateFileName(this)" />
         </label>
     </div>
     <div class="d-flex mt-3">
         <button class="btn btn-primary">Create</button>
         <button class="btn btn-secondary ms-3">Cancel</button>
     </div>
-    
-    
 </div>
