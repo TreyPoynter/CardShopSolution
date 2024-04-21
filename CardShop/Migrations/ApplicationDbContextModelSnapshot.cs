@@ -4,19 +4,16 @@ using CardShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CardShop.Data.Migrations
+namespace CardShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240417161551_ImpliedUser")]
-    partial class ImpliedUser
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +39,9 @@ namespace CardShop.Data.Migrations
                     b.Property<bool>("IsForSale")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ManufactuererId")
+                        .HasColumnType("int");
+
                     b.Property<long?>("Number")
                         .HasColumnType("bigint");
 
@@ -52,9 +52,6 @@ namespace CardShop.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("QualityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RarityId")
                         .HasColumnType("int");
 
                     b.Property<int>("SportId")
@@ -68,9 +65,9 @@ namespace CardShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QualityId");
+                    b.HasIndex("ManufactuererId");
 
-                    b.HasIndex("RarityId");
+                    b.HasIndex("QualityId");
 
                     b.HasIndex("SportId");
 
@@ -144,6 +141,74 @@ namespace CardShop.Data.Migrations
                         {
                             TypeId = 10,
                             Name = "Box Topper"
+                        });
+                });
+
+            modelBuilder.Entity("CardShop.Models.Domain.Manufacturer", b =>
+                {
+                    b.Property<int>("ManufacturerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ManufacturerId"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ManufacturerId");
+
+                    b.ToTable("Manufacturers");
+
+                    b.HasData(
+                        new
+                        {
+                            ManufacturerId = 1,
+                            Name = "Topps"
+                        },
+                        new
+                        {
+                            ManufacturerId = 2,
+                            Name = "Panini"
+                        },
+                        new
+                        {
+                            ManufacturerId = 3,
+                            Name = "Upper Deck"
+                        },
+                        new
+                        {
+                            ManufacturerId = 4,
+                            Name = "Bowman"
+                        },
+                        new
+                        {
+                            ManufacturerId = 5,
+                            Name = "Leaf Trading Cards"
+                        },
+                        new
+                        {
+                            ManufacturerId = 6,
+                            Name = "Donruss"
+                        },
+                        new
+                        {
+                            ManufacturerId = 7,
+                            Name = "Score"
+                        },
+                        new
+                        {
+                            ManufacturerId = 8,
+                            Name = "Fleer"
+                        },
+                        new
+                        {
+                            ManufacturerId = 9,
+                            Name = "Pro Set"
+                        },
+                        new
+                        {
+                            ManufacturerId = 10,
+                            Name = "Tristar"
                         });
                 });
 
@@ -228,74 +293,6 @@ namespace CardShop.Data.Migrations
                         {
                             QualityId = 8,
                             Type = "Damaged"
-                        });
-                });
-
-            modelBuilder.Entity("CardShop.Models.Domain.Rarity", b =>
-                {
-                    b.Property<int>("RarityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RarityId"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RarityId");
-
-                    b.ToTable("Rarities");
-
-                    b.HasData(
-                        new
-                        {
-                            RarityId = 1,
-                            Name = "Common"
-                        },
-                        new
-                        {
-                            RarityId = 2,
-                            Name = "Uncommon"
-                        },
-                        new
-                        {
-                            RarityId = 3,
-                            Name = "Rare"
-                        },
-                        new
-                        {
-                            RarityId = 4,
-                            Name = "Super Rare"
-                        },
-                        new
-                        {
-                            RarityId = 5,
-                            Name = "Legendary"
-                        },
-                        new
-                        {
-                            RarityId = 6,
-                            Name = "Special Edition"
-                        },
-                        new
-                        {
-                            RarityId = 7,
-                            Name = "Promotional"
-                        },
-                        new
-                        {
-                            RarityId = 8,
-                            Name = "Collectors Edition"
-                        },
-                        new
-                        {
-                            RarityId = 9,
-                            Name = "Team Spirit"
-                        },
-                        new
-                        {
-                            RarityId = 10,
-                            Name = "All Star"
                         });
                 });
 
@@ -563,15 +560,15 @@ namespace CardShop.Data.Migrations
 
             modelBuilder.Entity("CardShop.Models.Domain.Card", b =>
                 {
-                    b.HasOne("CardShop.Models.Domain.Quality", "Quality")
+                    b.HasOne("CardShop.Models.Domain.Manufacturer", "Manufacturer")
                         .WithMany()
-                        .HasForeignKey("QualityId")
+                        .HasForeignKey("ManufactuererId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CardShop.Models.Domain.Rarity", "Rarity")
+                    b.HasOne("CardShop.Models.Domain.Quality", "Quality")
                         .WithMany()
-                        .HasForeignKey("RarityId")
+                        .HasForeignKey("QualityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -587,9 +584,9 @@ namespace CardShop.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Quality");
+                    b.Navigation("Manufacturer");
 
-                    b.Navigation("Rarity");
+                    b.Navigation("Quality");
 
                     b.Navigation("Sport");
 

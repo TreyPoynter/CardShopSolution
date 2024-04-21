@@ -18,7 +18,7 @@ namespace CardShop.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<CardType> CardTypes { get; set; }
         public DbSet<Quality> Qualities { get; set; }
-        public DbSet<Rarity> Rarities { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Sport> Sports { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -29,7 +29,7 @@ namespace CardShop.Data
             builder.ApplyConfiguration(new CardTypeConfig());
             builder.ApplyConfiguration(new PurchaseConfig());
             builder.ApplyConfiguration(new QualityConfig());
-            builder.ApplyConfiguration(new RarityConfig());
+            builder.ApplyConfiguration(new ManufacturerConfig());
             builder.ApplyConfiguration(new SportConfig());
         }
     }

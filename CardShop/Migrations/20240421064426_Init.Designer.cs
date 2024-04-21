@@ -9,10 +9,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace CardShop.Data.Migrations
+namespace CardShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240415133617_Init")]
+    [Migration("20240421064426_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -42,6 +42,9 @@ namespace CardShop.Data.Migrations
                     b.Property<bool>("IsForSale")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ManufactuererId")
+                        .HasColumnType("int");
+
                     b.Property<long?>("Number")
                         .HasColumnType("bigint");
 
@@ -52,9 +55,6 @@ namespace CardShop.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("QualityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RarityId")
                         .HasColumnType("int");
 
                     b.Property<int>("SportId")
@@ -68,9 +68,9 @@ namespace CardShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QualityId");
+                    b.HasIndex("ManufactuererId");
 
-                    b.HasIndex("RarityId");
+                    b.HasIndex("QualityId");
 
                     b.HasIndex("SportId");
 
@@ -144,6 +144,74 @@ namespace CardShop.Data.Migrations
                         {
                             TypeId = 10,
                             Name = "Box Topper"
+                        });
+                });
+
+            modelBuilder.Entity("CardShop.Models.Domain.Manufacturer", b =>
+                {
+                    b.Property<int>("ManufacturerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ManufacturerId"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ManufacturerId");
+
+                    b.ToTable("Manufacturers");
+
+                    b.HasData(
+                        new
+                        {
+                            ManufacturerId = 1,
+                            Name = "Topps"
+                        },
+                        new
+                        {
+                            ManufacturerId = 2,
+                            Name = "Panini"
+                        },
+                        new
+                        {
+                            ManufacturerId = 3,
+                            Name = "Upper Deck"
+                        },
+                        new
+                        {
+                            ManufacturerId = 4,
+                            Name = "Bowman"
+                        },
+                        new
+                        {
+                            ManufacturerId = 5,
+                            Name = "Leaf Trading Cards"
+                        },
+                        new
+                        {
+                            ManufacturerId = 6,
+                            Name = "Donruss"
+                        },
+                        new
+                        {
+                            ManufacturerId = 7,
+                            Name = "Score"
+                        },
+                        new
+                        {
+                            ManufacturerId = 8,
+                            Name = "Fleer"
+                        },
+                        new
+                        {
+                            ManufacturerId = 9,
+                            Name = "Pro Set"
+                        },
+                        new
+                        {
+                            ManufacturerId = 10,
+                            Name = "Tristar"
                         });
                 });
 
@@ -231,74 +299,6 @@ namespace CardShop.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CardShop.Models.Domain.Rarity", b =>
-                {
-                    b.Property<int>("RarityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RarityId"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RarityId");
-
-                    b.ToTable("Rarities");
-
-                    b.HasData(
-                        new
-                        {
-                            RarityId = 1,
-                            Name = "Common"
-                        },
-                        new
-                        {
-                            RarityId = 2,
-                            Name = "Uncommon"
-                        },
-                        new
-                        {
-                            RarityId = 3,
-                            Name = "Rare"
-                        },
-                        new
-                        {
-                            RarityId = 4,
-                            Name = "Super Rare"
-                        },
-                        new
-                        {
-                            RarityId = 5,
-                            Name = "Legendary"
-                        },
-                        new
-                        {
-                            RarityId = 6,
-                            Name = "Special Edition"
-                        },
-                        new
-                        {
-                            RarityId = 7,
-                            Name = "Promotional"
-                        },
-                        new
-                        {
-                            RarityId = 8,
-                            Name = "Collectors Edition"
-                        },
-                        new
-                        {
-                            RarityId = 9,
-                            Name = "Team Spirit"
-                        },
-                        new
-                        {
-                            RarityId = 10,
-                            Name = "All Star"
-                        });
-                });
-
             modelBuilder.Entity("CardShop.Models.Domain.Sport", b =>
                 {
                     b.Property<int>("SportId")
@@ -357,48 +357,7 @@ namespace CardShop.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+            modelBuilder.Entity("CardShop.Models.Domain.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -407,18 +366,21 @@ namespace CardShop.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -427,10 +389,12 @@ namespace CardShop.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -448,15 +412,72 @@ namespace CardShop.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.UseTphMappingStrategy();
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -474,37 +495,83 @@ namespace CardShop.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserClaims");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("CardShop.Models.Domain.User", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("CardShop.Models.Domain.Card", b =>
                 {
-                    b.HasOne("CardShop.Models.Domain.Quality", "Quality")
+                    b.HasOne("CardShop.Models.Domain.Manufacturer", "Manufacturer")
                         .WithMany()
-                        .HasForeignKey("QualityId")
+                        .HasForeignKey("ManufactuererId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CardShop.Models.Domain.Rarity", "Rarity")
+                    b.HasOne("CardShop.Models.Domain.Quality", "Quality")
                         .WithMany()
-                        .HasForeignKey("RarityId")
+                        .HasForeignKey("QualityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -520,9 +587,9 @@ namespace CardShop.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Quality");
+                    b.Navigation("Manufacturer");
 
-                    b.Navigation("Rarity");
+                    b.Navigation("Quality");
 
                     b.Navigation("Sport");
 
@@ -544,6 +611,57 @@ namespace CardShop.Data.Migrations
                     b.Navigation("Buyer");
 
                     b.Navigation("CardBought");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("CardShop.Models.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("CardShop.Models.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CardShop.Models.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("CardShop.Models.Domain.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CardShop.Models.Domain.Card", b =>

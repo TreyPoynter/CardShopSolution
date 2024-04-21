@@ -1,8 +1,8 @@
 ﻿namespace CardShop.Models.Domain
 {
-    public class Rarity
+    public class Manufacturer
     {
-        public int RarityId { get; set; }
+        public int ManufacturerId { get; set; }
         public string? Name { get; set; }
     }
 }

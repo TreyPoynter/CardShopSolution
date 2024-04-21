@@ -14,11 +14,13 @@ namespace CardShop.Areas.Admin.Controllers
     {
         private Repository<Card> cardDb {  get; set; }
         private Repository<Sport> sportDb {  get; set; }
+        private Repository<Manufacturer> manufacturerDb {  get; set; }
 
         public ProductController(ApplicationDbContext ctx)
         {
             cardDb = new Repository<Card>(ctx);
             sportDb = new Repository<Sport>(ctx);
+            manufacturerDb = new Repository<Manufacturer>(ctx);
         }
 
         [Route("{area}/Products")]
@@ -39,7 +41,13 @@ namespace CardShop.Areas.Admin.Controllers
         [Route("{area}/Product/Add")]
         public IActionResult Add()
         {
-            return View(new Card());
+            CardCreationVM newCard = new CardCreationVM() 
+            {
+                Sports = sportDb.List(new QueryOptions<Sport>()),
+                Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>())
+            };
+
+            return View(newCard);
         }
     }
 }

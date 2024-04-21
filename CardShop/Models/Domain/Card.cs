@@ -18,9 +18,9 @@ namespace CardShop.Models.Domain
         public int QualityId { get; set; }
         [ForeignKey(nameof(QualityId))]
         public Quality? Quality { get; set; }
-        public int RarityId { get; set; }
-        [ForeignKey(nameof(RarityId))]
-        public Rarity? Rarity { get; set; }
+        public int ManufactuererId { get; set; }
+        [ForeignKey(nameof(ManufactuererId))]
+        public Manufacturer? Manufacturer { get; set; }
         public int SportId { get; set; }
         [ForeignKey(nameof(SportId))]
         public Sport? Sport { get; set; }

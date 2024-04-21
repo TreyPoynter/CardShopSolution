@@ -1,6 +1,6 @@
-﻿@model Card
+﻿@model CardCreationVM
 @{
-    ViewBag.Title = $"Add {nameof(Card)}";
+    ViewBag.Title = $"Add Card";
 }
 
 <div class="container mt-3">
@@ -21,8 +21,27 @@
         @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
-        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "", @type = "number" })
-        @Html.LabelFor(m => m.Price)
-        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+        <select class="form-select" asp-items="@(new SelectList(Model.Sports, "SportId", "Name"))">
+            <option value="">-- Select a Sport --</option>
+        </select>
+        @Html.LabelFor(m => m.Sports)
+        @Html.ValidationMessageFor(m => m.Sports, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Year, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Year)
+        @Html.ValidationMessageFor(m => m.Year, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Number, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Number)
+        @Html.ValidationMessageFor(m => m.Number, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Manufacturers, "ManufacturerId", "Name"))">
+            <option value="">-- Select a Manufacturer --</option>
+        </select>
+        @Html.LabelFor(m => m.Sports)
+        @Html.ValidationMessageFor(m => m.Sports, "", new { @class = "text-danger" })
     </div>
 </div>
