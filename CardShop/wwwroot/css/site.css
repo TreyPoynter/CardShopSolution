@@ -2,17 +2,15 @@ html {
   font-size: 14px;
 }
 
-@font-face {
-    font-family: 'barbecue_personal_useregular';
-    src: url('barbecue_personal_use-webfont.woff2') format('woff2'), url('barbecue_personal_use-webfont.woff') format('woff');
-    font-weight: normal;
+.lobster-regular {
+    font-family: "Lobster", sans-serif;
+    font-weight: 400;
     font-style: normal;
 }
-
-h1 {
-    font-family: barbecue_personal_useregular;
-    font-size: 60px;
+.jumbotron-text>h1.lobster-regular {
+    font-size: 5rem;
 }
+
 
 .field-validation-error {
     color: #dc3545;
@@ -88,4 +86,10 @@ body {
 
 .img-link:hover .card-img-top {
     transform: scale(1.05); /* Zoom effect on hover */
+}
+
+@media screen and (max-width: 383px){
+    .jumbotron-text > h1.lobster-regular {
+        font-size: 3.5rem;
+    }
 }
