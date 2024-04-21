@@ -13,10 +13,12 @@ namespace CardShop.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private Repository<Card> cardDb {  get; set; }
+        private Repository<Sport> sportDb {  get; set; }
 
         public ProductController(ApplicationDbContext ctx)
         {
             cardDb = new Repository<Card>(ctx);
+            sportDb = new Repository<Sport>(ctx);
         }
 
         [Route("{area}/Products")]

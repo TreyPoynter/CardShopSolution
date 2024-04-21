@@ -4,19 +4,18 @@ namespace CardShop.Models.ViewModels
 {
     public class RegisterVM
     {
-        [Required]
+        [Required(ErrorMessage = "First Name is required")]
         public string? FirstName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Last Name is required")]
         public string? LastName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         public string? Password { get; set; }
-        [Required]
         [DataType(DataType.Password)]
-        [Compare(nameof(Password))]
+        [Compare(nameof(Password), ErrorMessage = "Passwords must match")]
         public string? ConfirmPassword { get; set; }
     }
 }

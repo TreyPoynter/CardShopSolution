@@ -1,11 +1,28 @@
 ﻿@model Card
 @{
-    ViewBag.Title = $"Add {nameof(Model)}";
+    ViewBag.Title = $"Add {nameof(Card)}";
 }
 
 <div class="container mt-3">
     <div class="form-floating mb-3">
         @Html.TextBoxFor(m => m.Player, new {@class="form-control", @placeholder=""})
         @Html.LabelFor(m => m.Player)
+        @Html.ValidationMessageFor(m => m.Player, "", new{ @class="text-danger"} )
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control no-resize", @placeholder = "",
+                @style = "height: 7em; resize: none;"})
+        @Html.LabelFor(m => m.Description)
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "", @type="number" })
+        @Html.LabelFor(m => m.Price)
+        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "", @type = "number" })
+        @Html.LabelFor(m => m.Price)
+        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
     </div>
 </div>
