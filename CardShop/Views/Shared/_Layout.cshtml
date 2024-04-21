@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject SignInManager<User> UserManager
+@{
     var current = ViewContext.RouteData.Values["area"]?.ToString() ??
                 ViewContext.RouteData.Values["controller"]!.ToString() ?? "";
 
@@ -61,18 +62,34 @@
                                 <a class="nav-link text-dark @Active("Autographed")" asp-controller="Card"
                                    asp-action="Index" asp-route-id="Autographed">Autographed Cards</a>
                             </li>
-                            <li class="nav-item mobile-nav-link">
-                                <a class="nav-link text-dark @Active("Autographed")" asp-controller="Bag"
-                                   asp-action="Index">Your Bag</a>
-                            </li>
-                            <li class="nav-item mobile-nav-link">
-                                <a class="nav-link text-dark @Active("Autographed")" asp-controller="Account"
-                                   asp-action="Manager">Your account</a>
-                            </li>
-                            <li class="nav-item mobile-nav-link">
-                                <a class="nav-link text-dark @Active("Autographed")" asp-controller="Card"
-                                   asp-action="Index" asp-route-id="Autographed">Logout</a>
-                            </li>
+                            @if (UserManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item mobile-nav-link">
+                                    <a class="nav-link text-dark" asp-controller="Bag"
+                                       asp-action="Index">Your Bag</a>
+                                </li>
+                                <li class="nav-item mobile-nav-link">
+                                    <a class="nav-link text-dark" asp-controller="Account"
+                                       asp-action="Manager">Your account</a>
+                                </li>
+                                <li class="nav-item me-0 mobile-nav-link">
+                                    <form class="form-inline" asp-action="Logout" asp-controller="Account">
+                                        <button type="submit" class="nav-link btn btn-link text-dark pe-0">Logout</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item mobile-nav-link">
+                                    <a class="nav-link text-dark" asp-controller="Account"
+                                       asp-action="Login">Login</a>
+                                </li>
+                                <li class="nav-item mobile-nav-link">
+                                    <a class="nav-link text-dark" asp-controller="Account"
+                                       asp-action="Register">Register</a>
+                                </li>
+                            }
+
                         </ul>
                     </div>
                 </div>
