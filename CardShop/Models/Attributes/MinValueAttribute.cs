@@ -4,16 +4,16 @@ namespace CardShop.Models.Attributes
 {
     public class MinValueAttribute : ValidationAttribute
     {
-        private readonly double _minValue;
+        private readonly decimal _minValue;
 
-        public MinValueAttribute(double minValue)
+        public MinValueAttribute(decimal minValue)
         {
             _minValue = minValue;
         }
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if (value != null && (double)value < _minValue)
+            if (value != null && (decimal)value < _minValue)
             {
                 return new ValidationResult($"The field {validationContext.DisplayName} must be greater than or equal to {_minValue}.");
             }

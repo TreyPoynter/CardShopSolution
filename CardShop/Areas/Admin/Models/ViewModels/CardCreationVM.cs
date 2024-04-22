@@ -1,4 +1,5 @@
 ﻿using CardShop.Models.Domain;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace CardShop.Areas.Admin.Models.ViewModels
@@ -8,12 +9,16 @@ namespace CardShop.Areas.Admin.Models.ViewModels
         public IFormFile Image { get; set; }
 
         [Display(Name = "Sport")]
+        [ValidateNever]
         public IEnumerable<Sport> Sports { get; set; } = null!;
         [Display(Name = "Manufacturer")]
+        [ValidateNever]
         public IEnumerable<Manufacturer> Manufacturers { get; set; } = null!;
         [Display(Name = "Quality")]
+        [ValidateNever]
         public IEnumerable<Quality> Qualities { get; set; } = null!;
         [Display(Name = "Type")]
+        [ValidateNever]
         public IEnumerable<CardType> Types { get; set; } = null!;
 
 
