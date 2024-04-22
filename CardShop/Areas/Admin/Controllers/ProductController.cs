@@ -123,5 +123,18 @@ namespace CardShop.Areas.Admin.Controllers
             cardVM.Types = typeDb.List(new QueryOptions<CardType>());
             return View(cardVM);
         }
+        [Route("{area}/Product/Manage/{id?}")]
+        public IActionResult Manage(int id)
+        {
+            CardCreationVM cardToEdit = new CardCreationVM()
+            {
+                Card = cardDb.Get(id),
+                Sports = sportDb.List(new QueryOptions<Sport>()),
+                Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>()),
+                Qualities = qualityDb.List(new QueryOptions<Quality>()),
+                Types = typeDb.List(new QueryOptions<CardType>())
+            };
+            return View(cardToEdit);
+        }
     }
 }

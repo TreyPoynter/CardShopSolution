@@ -44,7 +44,7 @@
                     <td>@card.Price.Value.ToString("C")</td>
                     <td>@(card.IsForSale ? "For Sale" : "Not for Sale")</td>
                     <td>
-                        <button class="btn btn-primary">Manage</button>
+                        <a asp-action="Manage" asp-route-id="@card.Id" class="btn btn-primary">Manage</a>
                     </td>
                 </tr>
             }
