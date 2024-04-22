@@ -16,7 +16,7 @@
         @Html.ValidationMessageFor(m => m.Card.Description, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
-        @Html.TextBoxFor(m => m.Card.Price, new { @class = "form-control", @placeholder = "", @type = "number" })
+        @Html.TextBoxFor(m => m.Card.Price, new { @class = "form-control", @placeholder = "" })
         @Html.LabelFor(m => m.Card.Price)
         @Html.ValidationMessageFor(m => m.Card.Price, "", new { @class = "text-danger" })
     </div>
