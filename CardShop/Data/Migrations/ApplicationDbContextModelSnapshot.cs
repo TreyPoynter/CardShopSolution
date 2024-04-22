@@ -22,60 +22,6 @@ namespace CardShop.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CardShop.Models.Domain.Card", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsForSale")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ManufactuererId")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("Number")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Player")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("QualityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SportId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.Property<short?>("Year")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ManufactuererId");
-
-                    b.HasIndex("QualityId");
-
-                    b.HasIndex("SportId");
-
-                    b.HasIndex("TypeId");
-
-                    b.ToTable("Cards");
-                });
-
             modelBuilder.Entity("CardShop.Models.Domain.CardType", b =>
                 {
                     b.Property<int>("TypeId")
@@ -354,6 +300,72 @@ namespace CardShop.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CardShop.Models.Domain.TradingCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsForSale")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("ManufactuererId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Player")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Price")
+                        .IsRequired()
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QualityId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SportId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TypeId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<short?>("Year")
+                        .IsRequired()
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ManufactuererId");
+
+                    b.HasIndex("QualityId");
+
+                    b.HasIndex("SportId");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("Cards");
+                });
+
             modelBuilder.Entity("CardShop.Models.Domain.User", b =>
                 {
                     b.Property<string>("Id")
@@ -558,7 +570,24 @@ namespace CardShop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CardShop.Models.Domain.Card", b =>
+            modelBuilder.Entity("CardShop.Models.Domain.Purchase", b =>
+                {
+                    b.HasOne("CardShop.Models.Domain.TradingCard", "CardBought")
+                        .WithMany("Purchases")
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CardShop.Models.Domain.User", "Buyer")
+                        .WithMany("Purchases")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Buyer");
+
+                    b.Navigation("CardBought");
+                });
+
+            modelBuilder.Entity("CardShop.Models.Domain.TradingCard", b =>
                 {
                     b.HasOne("CardShop.Models.Domain.Manufacturer", "Manufacturer")
                         .WithMany()
@@ -591,23 +620,6 @@ namespace CardShop.Migrations
                     b.Navigation("Sport");
 
                     b.Navigation("Type");
-                });
-
-            modelBuilder.Entity("CardShop.Models.Domain.Purchase", b =>
-                {
-                    b.HasOne("CardShop.Models.Domain.Card", "CardBought")
-                        .WithMany("Purchases")
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CardShop.Models.Domain.User", "Buyer")
-                        .WithMany("Purchases")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Buyer");
-
-                    b.Navigation("CardBought");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -661,7 +673,7 @@ namespace CardShop.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CardShop.Models.Domain.Card", b =>
+            modelBuilder.Entity("CardShop.Models.Domain.TradingCard", b =>
                 {
                     b.Navigation("Purchases");
                 });
