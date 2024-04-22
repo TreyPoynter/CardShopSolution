@@ -2,3 +2,102 @@
 @{
     ViewBag.Title = $"Manage {Model.Card.Player}";
 }
+<div class="mt-3">
+    <h2>Manage @Model.Card.Player</h2>
+</div>
+
+<form class="container mt-3" asp-action="Manage" enctype="multipart/form-data">
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Card.Player, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Card.Player)
+        @Html.ValidationMessageFor(m => m.Card.Player, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextAreaFor(m => m.Card.Description, new
+            {
+                @class = "form-control no-resize",
+                @placeholder = "",
+                @style = "height: 7em; resize: none;"
+            })
+        @Html.LabelFor(m => m.Card.Description)
+        @Html.ValidationMessageFor(m => m.Card.Description, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Card.Price, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Card.Price)
+        @Html.ValidationMessageFor(m => m.Card.Price, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Card.Year, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Card.Year)
+        @Html.ValidationMessageFor(m => m.Card.Year, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        @Html.TextBoxFor(m => m.Card.Number, new { @class = "form-control", @placeholder = "" })
+        @Html.LabelFor(m => m.Card.Number)
+        @Html.ValidationMessageFor(m => m.Card.Number, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Manufacturers, "ManufacturerId", "Name"))"
+                asp-for="Card.ManufactuererId">
+            <option value="">-- Select a Manufacturer --</option>
+        </select>
+        @Html.LabelFor(m => m.Manufacturers)
+        @Html.ValidationMessageFor(m => m.Card.ManufactuererId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Sports, "SportId", "Name"))"
+                asp-for="Card.SportId">
+            <option value="">-- Select a Sport --</option>
+        </select>
+        @Html.LabelFor(m => m.Sports)
+        @Html.ValidationMessageFor(m => m.Card.SportId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Types, "TypeId", "Name"))"
+                asp-for="Card.TypeId">
+            <option value="">-- Select a Type --</option>
+        </select>
+        @Html.LabelFor(m => m.Types)
+        @Html.ValidationMessageFor(m => m.Card.TypeId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Qualities, "QualityId", "Type"))"
+                asp-for="Card.QualityId">
+            <option value="">-- Select a Type --</option>
+        </select>
+        @Html.LabelFor(m => m.Qualities)
+        @Html.ValidationMessageFor(m => m.Card.QualityId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-check mb-3">
+        @Html.CheckBoxFor(m => m.Card.IsForSale, new { @class = "form-check-input" })
+        @Html.LabelFor(m => m.Card.IsForSale)
+    </div>
+
+    <div class="file-upload-form">
+        <label for="file" class="file-upload-label">
+            <div class="file-upload-design">
+                
+                @if(Model.Image == null)
+                {
+                    <i class="fa-solid fa-image"></i>
+                    <p>Drag and Drop</p>
+                    <p>or</p>
+                    <span class="browse-button">Browse file</span>
+                }
+                else
+                {
+                    <img src="~/images/@Model.Image.FileName" alt="Uploaded Image" class="uploaded-image" />
+                    <span class="browse-button">@Model.Image.FileName</span>
+                }
+            </div>
+            <input id="file" name="image" type="file" accept="image/*" onchange="updateFileName(this)" asp-for="Image" 
+                value="@Model.Image"/>
+        </label>
+    </div>
+    @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
+    <div class="d-flex mt-3">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-action="Index" asp-controller="Product" class="btn btn-secondary ms-3">Cancel</a>
+    </div>
+</form>

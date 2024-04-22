@@ -15,6 +15,7 @@ namespace CardShop.Models.Domain
         [Required(ErrorMessage = "A Price is required")]
         [Range(1.0d, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public decimal? Price { get; set; }
+        [Display(Name = "Is Listed")]
         public bool IsForSale { get; set; } = true;
         [Required(ErrorMessage = "A Card Type is required")]
         public int? TypeId { get; set; }

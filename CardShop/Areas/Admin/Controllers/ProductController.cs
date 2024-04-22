@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
+using System.Drawing;
 using System.Reflection;
 
 namespace CardShop.Areas.Admin.Controllers
@@ -99,20 +100,7 @@ namespace CardShop.Areas.Admin.Controllers
 
                 var result = service.Create(options);
 
-                TradingCard card = new TradingCard()
-                {
-                    Player = cardVM.Card.Player,
-                    Description = cardVM.Card.Description,
-                    Price = cardVM.Card.Price,
-                    Year = cardVM.Card.Year,
-                    Number = cardVM.Card.Number,
-                    TypeId = cardVM.Card.TypeId,
-                    QualityId = cardVM.Card.QualityId,
-                    ManufactuererId = cardVM.Card.ManufactuererId,
-                    SportId = cardVM.Card.SportId,
-                    ImageName = fileName,
-                    ProductId = result.Id
-                };
+                TradingCard card = cardVM.Card;
                 cardDb.Add(card);
                 cardDb.Save();
                 return RedirectToAction("Index");
@@ -123,18 +111,76 @@ namespace CardShop.Areas.Admin.Controllers
             cardVM.Types = typeDb.List(new QueryOptions<CardType>());
             return View(cardVM);
         }
+
         [Route("{area}/Product/Manage/{id?}")]
         public IActionResult Manage(int id)
         {
-            CardCreationVM cardToEdit = new CardCreationVM()
+            TradingCard cardToEdit = cardDb.Get(id);
+            string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
+            string filePath = Path.Combine(uploadDir, cardToEdit.ImageName);
+            CardCreationVM cardVM = new CardCreationVM()
             {
-                Card = cardDb.Get(id),
+                Card = cardToEdit,
                 Sports = sportDb.List(new QueryOptions<Sport>()),
                 Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>()),
                 Qualities = qualityDb.List(new QueryOptions<Quality>()),
                 Types = typeDb.List(new QueryOptions<CardType>())
             };
-            return View(cardToEdit);
+
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            {
+                string? fileName = Path.GetFileName(filePath); // Get the file name
+                var file = new FormFile(fileStream, 0, fileStream.Length, null, fileName)
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType = "image/jpeg" // Set the content type based on your file type
+                };
+                file.Headers["Content-Disposition"] = $"form-data; name=\"image\"; filename=\"{fileName}\"";
+                cardVM.Image = file;
+            }
+
+            return View(cardVM);
         }
+        [Route("{area}/Product/Manage/{id?}")]
+        [HttpPost]
+        public IActionResult Manage(CardCreationVM cardVM, IFormFile image)
+        {
+            if (ModelState.IsValid)
+            {
+                var service = new ProductService();
+                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
+                string fileName = cardVM.Image.FileName;
+                string filePath = Path.Combine(uploadDir, fileName);
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    cardVM.Image.CopyTo(fileStream);
+                }
+                if (cardVM.Card.Description == null)
+                    cardVM.Card.Description = String.Empty;
+
+                TradingCard updatedCard = cardVM.Card;
+
+                var options = new ProductUpdateOptions
+                {
+                    Metadata = new Dictionary<string, string>
+                    {
+                        { "name", updatedCard.Player },
+                        { "description", updatedCard.Description },
+                        { "metadata[default_price]", updatedCard.Price.ToString() },
+                        { "active", updatedCard.IsForSale.ToString() }
+                    }
+                };
+                service.Update(updatedCard.ProductId, options);
+                cardDb.Update(updatedCard);
+                cardDb.Save();
+                return RedirectToAction("Index");
+            }
+            cardVM.Sports = sportDb.List(new QueryOptions<Sport>());
+            cardVM.Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>());
+            cardVM.Qualities = qualityDb.List(new QueryOptions<Quality>());
+            cardVM.Types = typeDb.List(new QueryOptions<CardType>());
+            return View(cardVM);
+        }
+
     }
 }
