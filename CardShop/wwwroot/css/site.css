@@ -60,6 +60,18 @@ body {
         border-color: #2e8575;
     }
 
+.form-check-input[type="checkbox"]:checked {
+    background-color: #00ac5b;
+    border-color: #00ac5b !important;
+}
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 172, 91, 0.5); /* Change the focus border color to red */
+}
+
+.form-check-input[type="checkbox"]:not(:checked) {
+    background-color: white;
+}
+
 #nav-dropdown > li > .dropdown-item:focus {
     background-color: #212529;
     color: #fff !important;
