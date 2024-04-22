@@ -22,11 +22,11 @@ namespace CardShop.Areas.Admin.Models.ViewModels
         public IEnumerable<CardType> Types { get; set; } = null!;
 
 
-        public Card Card { get; set; }
+        public TradingCard Card { get; set; }
 
         public CardCreationVM()
         {
-            Card = new Card();
+            Card = new TradingCard();
         }
     }
 }

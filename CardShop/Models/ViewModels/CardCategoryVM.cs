@@ -6,11 +6,11 @@ namespace CardShop.Models.ViewModels
     {
         public string? Category { get; set; }
 
-        public IEnumerable<Card> Cards { get; set; } = null!;
+        public IEnumerable<TradingCard> Cards { get; set; } = null!;
 
         public CardCategoryVM()
         {
-            Cards = new List<Card>();
+            Cards = new List<TradingCard>();
         }
     }
 }

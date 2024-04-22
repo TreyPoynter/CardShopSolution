@@ -1,4 +1,4 @@
-﻿@model SearchVM<Card>
+﻿@model SearchVM<TradingCard>
 @{
     ViewBag.Title = "Manage Cards";
 }
@@ -35,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Card card in Model.Items)
+            @foreach (TradingCard card in Model.Items)
             {
                 <tr>
                     <td class="">@card.Player</td>

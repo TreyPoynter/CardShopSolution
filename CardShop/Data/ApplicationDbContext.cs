@@ -14,7 +14,7 @@ namespace CardShop.Data
         {
         }
 
-        public DbSet<Card> Cards { get; set; }
+        public DbSet<TradingCard> Cards { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<CardType> CardTypes { get; set; }
         public DbSet<Quality> Qualities { get; set; }

@@ -10,7 +10,7 @@ namespace CardShop.Models.Domain
         public User? Buyer { get; set; }
         public int CardId { get; set; }
         [ForeignKey(nameof(CardId))]
-        public Card? CardBought { get; set; }
+        public TradingCard? CardBought { get; set; }
         public decimal Total { get; set; }
     }
 }

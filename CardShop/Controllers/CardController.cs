@@ -8,11 +8,11 @@ namespace CardShop.Controllers
 {
     public class CardController : Controller
     {
-        private readonly Repository<Card> _cardDb;
+        private readonly Repository<TradingCard> _cardDb;
 
         public CardController(ApplicationDbContext ctx)
         {
-            _cardDb = new Repository<Card>(ctx);
+            _cardDb = new Repository<TradingCard>(ctx);
         }
 
         [Route("/Cards/{id?}")]
@@ -22,7 +22,7 @@ namespace CardShop.Controllers
             CardCategoryVM cardsCategoryVM = new()
             {
                 Category = id,
-                Cards = _cardDb.List(new QueryOptions<Card>()
+                Cards = _cardDb.List(new QueryOptions<TradingCard>()
                 {
                     OrderBy = c => c.Player,
                     Where = c => c.Sport.Name == id,

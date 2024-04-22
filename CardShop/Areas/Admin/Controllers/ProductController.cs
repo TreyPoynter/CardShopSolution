@@ -6,6 +6,7 @@ using CardShop.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 using System.Reflection;
 
 namespace CardShop.Areas.Admin.Controllers
@@ -15,7 +16,7 @@ namespace CardShop.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private IWebHostEnvironment webHostEnvironment;
-        private Repository<Card> cardDb {  get; set; }
+        private Repository<TradingCard> cardDb {  get; set; }
         private Repository<Sport> sportDb {  get; set; }
         private Repository<Manufacturer> manufacturerDb {  get; set; }
         private Repository<Quality> qualityDb {  get; set; }
@@ -23,7 +24,7 @@ namespace CardShop.Areas.Admin.Controllers
 
         public ProductController(ApplicationDbContext ctx, IWebHostEnvironment webHostEnv)
         {
-            cardDb = new Repository<Card>(ctx);
+            cardDb = new Repository<TradingCard>(ctx);
             sportDb = new Repository<Sport>(ctx);
             manufacturerDb = new Repository<Manufacturer>(ctx);
             qualityDb = new Repository<Quality>(ctx);
@@ -35,10 +36,10 @@ namespace CardShop.Areas.Admin.Controllers
         [Route("{area}/Products")]
         public IActionResult Index(string search = "")
         {
-            SearchVM<Card> model = new SearchVM<Card>()
+            SearchVM<TradingCard> model = new SearchVM<TradingCard>()
             {
                 Search = search,
-                Items = cardDb.List(new QueryOptions<Card>()
+                Items = cardDb.List(new QueryOptions<TradingCard>()
                 {
                     Includes = "Type, Quality, Manufacturer, Sport"
                 })
@@ -55,7 +56,7 @@ namespace CardShop.Areas.Admin.Controllers
         {
             CardCreationVM newCard = new CardCreationVM() 
             {
-                Card = new Card(),
+                Card = new TradingCard(),
                 Sports = sportDb.List(new QueryOptions<Sport>()),
                 Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>()),
                 Qualities = qualityDb.List(new QueryOptions<Quality>()),
@@ -81,7 +82,17 @@ namespace CardShop.Areas.Admin.Controllers
                 if (cardVM.Card.Description == null)
                     cardVM.Card.Description = String.Empty;
 
-                Card card = new Card()
+                var options = new ProductCreateOptions
+                {
+                    Name = cardVM.Card.Player,
+                    DefaultPriceData = new ProductDefaultPriceDataOptions
+                    {
+                        UnitAmountDecimal = cardVM.Card.Price,
+                        Currency = "USD"
+                    }
+                };
+
+                TradingCard card = new TradingCard()
                 {
                     Player = cardVM.Card.Player,
                     Description = cardVM.Card.Description,

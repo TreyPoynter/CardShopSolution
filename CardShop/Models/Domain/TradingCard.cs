@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CardShop.Models.Domain
 {
-    public class Card
+    public class TradingCard
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "A Player is required")]
@@ -44,8 +44,10 @@ namespace CardShop.Models.Domain
         [ValidateNever]
         public Sport Sport { get; set; }
         public IEnumerable<Purchase> Purchases { get; set; }
+        [ValidateNever]
+        public string ProductId { get; set; } = String.Empty;
 
-        public Card()
+        public TradingCard()
         {
             Description = String.Empty;
             Purchases = new List<Purchase>();
