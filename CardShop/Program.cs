@@ -3,6 +3,7 @@ using CardShop.Models.Domain;
 using CardShop.Models.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,8 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:ApiKey").Get<string>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
