@@ -78,6 +78,9 @@ namespace CardShop.Areas.Admin.Controllers
                     cardVM.Image.CopyTo(fileStream);
                 }
 
+                if (cardVM.Card.Description == null)
+                    cardVM.Card.Description = String.Empty;
+
                 Card card = new Card()
                 {
                     Player = cardVM.Card.Player,
