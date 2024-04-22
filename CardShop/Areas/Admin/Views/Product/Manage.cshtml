@@ -40,7 +40,6 @@
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Manufacturers, "ManufacturerId", "Name"))"
                 asp-for="Card.ManufactuererId">
-            <option value="">-- Select a Manufacturer --</option>
         </select>
         @Html.LabelFor(m => m.Manufacturers)
         @Html.ValidationMessageFor(m => m.Card.ManufactuererId, "", new { @class = "text-danger" })
@@ -48,7 +47,6 @@
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Sports, "SportId", "Name"))"
                 asp-for="Card.SportId">
-            <option value="">-- Select a Sport --</option>
         </select>
         @Html.LabelFor(m => m.Sports)
         @Html.ValidationMessageFor(m => m.Card.SportId, "", new { @class = "text-danger" })
@@ -56,7 +54,6 @@
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Types, "TypeId", "Name"))"
                 asp-for="Card.TypeId">
-            <option value="">-- Select a Type --</option>
         </select>
         @Html.LabelFor(m => m.Types)
         @Html.ValidationMessageFor(m => m.Card.TypeId, "", new { @class = "text-danger" })
@@ -64,7 +61,6 @@
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Qualities, "QualityId", "Type"))"
                 asp-for="Card.QualityId">
-            <option value="">-- Select a Type --</option>
         </select>
         @Html.LabelFor(m => m.Qualities)
         @Html.ValidationMessageFor(m => m.Card.QualityId, "", new { @class = "text-danger" })
@@ -91,8 +87,7 @@
                     <span class="browse-button">@Model.Image.FileName</span>
                 }
             </div>
-            <input id="file" name="image" type="file" accept="image/*" onchange="updateFileName(this)" asp-for="Image" 
-                value="@Model.Image"/>
+            <input id="file" name="image" type="file" accept="image/*" onchange="updateFileName(this)" asp-for="Image"/>
         </label>
     </div>
     @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })

@@ -127,6 +127,10 @@ namespace CardShop.Areas.Admin.Controllers
                 Types = typeDb.List(new QueryOptions<CardType>())
             };
 
+            
+            // Store the Base64 string in TempData
+            
+
             using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
             {
                 string? fileName = Path.GetFileName(filePath); // Get the file name
@@ -138,6 +142,14 @@ namespace CardShop.Areas.Admin.Controllers
                 file.Headers["Content-Disposition"] = $"form-data; name=\"image\"; filename=\"{fileName}\"";
                 cardVM.Image = file;
             }
+            string base64String;
+            using (var ms = new MemoryStream())
+            {
+                cardVM.Image.CopyTo(ms);
+                var imageBytes = ms.ToArray();
+                base64String = Convert.ToBase64String(imageBytes);
+            }
+            TempData["ImageData"] = base64String;
 
             return View(cardVM);
         }
@@ -145,6 +157,21 @@ namespace CardShop.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Manage(CardCreationVM cardVM, IFormFile image)
         {
+            if (cardVM.Image == null)
+            {
+                // Retrieve the image from TempData and assign it to the model
+                var base64String = TempData["ImageData"] as string;
+                if (!string.IsNullOrEmpty(base64String))
+                {
+                    // Convert the Base64 string back to an IFormFile object
+                    byte[] imageBytes = Convert.FromBase64String(base64String);
+                    var file = new FormFile(new MemoryStream(imageBytes), 0, imageBytes.Length, "Image", "image.jpg");
+
+                    // Assign the retrieved image to the model
+                    cardVM.Image = file;
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 var service = new ProductService();
