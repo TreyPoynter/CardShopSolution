@@ -6,6 +6,7 @@ namespace CardShop.Areas.Admin.Models.ViewModels
 {
     public class CardCreationVM
     {
+        [Required(ErrorMessage = "Image is required")]
         public IFormFile Image { get; set; }
 
         [Display(Name = "Sport")]
