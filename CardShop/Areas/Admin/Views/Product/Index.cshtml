@@ -1,5 +1,6 @@
 ﻿@model SearchVM<Card>
 @{
+    ViewBag.Title = "Manage Cards";
 }
 
 <div class="mt-3">
@@ -13,6 +14,13 @@
     </form>
 </div>
 
+
+@if (Model.Search != String.Empty)
+{
+    <div>
+        <p>@Model.Items.Count() results for @Model.Search</p>
+    </div>
+}
 @if(Model.Items.Count() > 0)
 {
     <table class="table">
@@ -21,6 +29,8 @@
                 <th scope="col">Player</th>
                 <th scope="col">Type</th>
                 <th scope="col">Sport</th>
+                <th scope="col">Price</th>
+                <th scope="col">Is Listed</th>
                 <th></th>
             </tr>
         </thead>
@@ -28,9 +38,14 @@
             @foreach (Card card in Model.Items)
             {
                 <tr>
-                    <td>@card.Player</td>
+                    <td class="">@card.Player</td>
                     <td>@card.Type.Name</td>
                     <td>@card.Sport.Name</td>
+                    <td>@card.Price.Value.ToString("C")</td>
+                    <td>@(card.IsForSale ? "For Sale" : "Not for Sale")</td>
+                    <td>
+                        <button class="btn btn-primary">Manage</button>
+                    </td>
                 </tr>
             }
         </tbody>

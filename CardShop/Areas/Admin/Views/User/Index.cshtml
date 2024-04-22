@@ -1,5 +1,6 @@
 ﻿@model SearchVM<User>
 @{
+    ViewBag.Title = "Manage Users";
 }
 
 <div class="mt-3">
@@ -19,22 +20,24 @@
         <p>@Model.Items.Count() results for @Model.Search</p>
     </div>
 }
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Full Name</th>
-            <th scope="col">Email</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (User user in Model.Items)
-        {
+@if(Model.Items.Count() > 0)
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@user.FullName</td>
-                <td>@user.Email</td>
+                <th scope="col">Full Name</th>
+                <th scope="col">Email</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (User user in Model.Items)
+            {
+                <tr>
+                    <td>@user.FullName</td>
+                    <td>@user.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
