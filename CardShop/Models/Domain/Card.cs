@@ -11,11 +11,11 @@ namespace CardShop.Models.Domain
         [Required(ErrorMessage = "A Player is required")]
         public string? Player {  get; set; }
         [ValidateNever]
-        public string Description { get; set; }
+        public string Description { get; set; } = String.Empty;
         [Required(ErrorMessage = "A Price is required")]
         [Range(1.0d, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public decimal? Price { get; set; }
-        public bool IsForSale { get; set; } = false;
+        public bool IsForSale { get; set; } = true;
         [Required(ErrorMessage = "A Card Type is required")]
         public int? TypeId { get; set; }
         [ForeignKey(nameof(TypeId))]

@@ -38,7 +38,10 @@ namespace CardShop.Areas.Admin.Controllers
             SearchVM<Card> model = new SearchVM<Card>()
             {
                 Search = search,
-                Items = cardDb.List(new QueryOptions<Card>())
+                Items = cardDb.List(new QueryOptions<Card>()
+                {
+                    Includes = "Type, Quality, Manufacturer, Sport"
+                })
             };
 
             if(search != String.Empty)
