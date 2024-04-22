@@ -1,4 +1,8 @@
-﻿.file-upload-form {
+﻿.uploaded-image {
+    max-height: 150px;
+}
+
+.file-upload-form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,9 +46,7 @@
     transition: all 0.3s;
 }
 
-.uploaded-image {
-    max-height: 150px;
-}
+
 
     .browse-button:hover {
         background-color: rgb(14, 14, 14);
