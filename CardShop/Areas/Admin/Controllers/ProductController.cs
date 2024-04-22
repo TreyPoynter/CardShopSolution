@@ -71,6 +71,7 @@ namespace CardShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var service = new ProductService();
                 string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
                 string fileName = cardVM.Image.FileName;
                 string filePath = Path.Combine(uploadDir, fileName);
@@ -90,7 +91,13 @@ namespace CardShop.Areas.Admin.Controllers
                         UnitAmountDecimal = cardVM.Card.Price,
                         Currency = "USD"
                     }
+                    /*
+                     * (When we upload let's change the filePath to the URL)
+                     * Images = new List<string> { filePath }
+                    */
                 };
+
+                var result = service.Create(options);
 
                 TradingCard card = new TradingCard()
                 {
@@ -103,7 +110,8 @@ namespace CardShop.Areas.Admin.Controllers
                     QualityId = cardVM.Card.QualityId,
                     ManufactuererId = cardVM.Card.ManufactuererId,
                     SportId = cardVM.Card.SportId,
-                    ImageName = fileName
+                    ImageName = fileName,
+                    ProductId = result.Id
                 };
                 cardDb.Add(card);
                 cardDb.Save();
