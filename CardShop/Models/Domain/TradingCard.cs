@@ -50,6 +50,9 @@ namespace CardShop.Models.Domain
         [ValidateNever]
         public string PriceId { get; set; } = String.Empty;
 
+        [NotMapped]
+        public string Slug => $"{Player.ToLower().Replace(' ', '-')}";
+
         public TradingCard()
         {
             Description = String.Empty;
