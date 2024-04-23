@@ -5,7 +5,6 @@ using CardShop.Models;
 using CardShop.Models.Domain;
 using CardShop.Models.ExtensionMethods;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 
