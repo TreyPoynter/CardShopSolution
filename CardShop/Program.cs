@@ -15,6 +15,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddRouting(opts =>
+{
+    opts.LowercaseUrls = true;
+    opts.AppendTrailingSlash = true;
+});
+
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedEmail = false;

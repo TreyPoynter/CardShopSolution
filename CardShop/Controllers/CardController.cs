@@ -1,5 +1,6 @@
 ﻿using CardShop.Data;
 using CardShop.Data.Repository;
+using CardShop.Models;
 using CardShop.Models.Domain;
 using CardShop.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace CardShop.Controllers
             ViewBag.Id = id;
             CardCategoryVM cardsCategoryVM = new()
             {
-                Category = id,
+                Category = id.Capitalize(),
                 Cards = _cardDb.List(new QueryOptions<TradingCard>()
                 {
                     OrderBy = c => c.Player,
