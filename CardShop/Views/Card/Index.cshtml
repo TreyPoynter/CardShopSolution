@@ -19,10 +19,11 @@
                     <div class="product-card-bottom">
                         <p class="mt-1 mb-0">@card.Player</p>
                         <p class="mb-1">@card.Price.Value.ToString("C")</p>
-                        <form>
-                            <button class="btn btn-dark">Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i></button>
+                        <form asp-controller="Bag" asp-action="AddToBag">
+                            <button class="btn btn-dark" type="submit">
+                                Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i>
+                            </button>
                         </form>
-                        
                     </div>
                 </div>
             </div>
