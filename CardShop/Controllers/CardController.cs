@@ -19,7 +19,6 @@ namespace CardShop.Controllers
         [Route("/Cards/{id?}")]
         public IActionResult Index(string id)
         {
-            ViewBag.Id = id;
             CardCategoryVM cardsCategoryVM = new()
             {
                 Category = id.Capitalize(),
@@ -32,6 +31,28 @@ namespace CardShop.Controllers
             };
 
             return View(cardsCategoryVM);
+        }
+
+        [HttpPost]
+        public IActionResult Search(string search)
+        {
+            CardCategoryVM cardsCategoryVM = new()
+            {
+                Category = search,
+                Cards = _cardDb.List(new QueryOptions<TradingCard>()
+                {
+                    OrderBy = c => c.Player,
+                    Includes = "Type, Quality, Manufacturer, Sport",
+                }),
+                IsSearching = true
+            };
+            cardsCategoryVM.Cards = _cardDb.Search(
+                c => c.Player.ContainsNoCase(search) ||
+                c.Description.ContainsNoCase(search) ||
+                c.Type.Name.ContainsNoCase(search) ||
+                c.Manufacturer.Name.ContainsNoCase(search) ||
+                c.Sport.Name.ContainsNoCase(search));
+            return View("Index", cardsCategoryVM);
         }
     }
 }

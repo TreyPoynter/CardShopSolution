@@ -118,12 +118,14 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Products..." >
-                                <button class="btn btn-dark" type="button" id="button-addon2">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
+                            <form asp-action="Search" asp-controller="Card" method="post">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search Products...">
+                                    <button class="btn btn-dark" type="submit">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
