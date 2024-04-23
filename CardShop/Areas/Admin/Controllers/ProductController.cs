@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using System.Drawing;
+using System.IO;
+using System.Net.Http;
 using System.Reflection;
 
 namespace CardShop.Areas.Admin.Controllers
@@ -99,8 +101,9 @@ namespace CardShop.Areas.Admin.Controllers
                 };
 
                 var result = service.Create(options);
-
                 TradingCard card = cardVM.Card;
+                card.ProductId = result.Id;
+                card.PriceId = result.DefaultPriceId;
                 cardDb.Add(card);
                 cardDb.Save();
                 return RedirectToAction("Index");
@@ -127,54 +130,14 @@ namespace CardShop.Areas.Admin.Controllers
                 Types = typeDb.List(new QueryOptions<CardType>())
             };
 
-            
-            // Store the Base64 string in TempData
-            
-
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
-            {
-                string? fileName = Path.GetFileName(filePath); // Get the file name
-                var file = new FormFile(fileStream, 0, fileStream.Length, null, fileName)
-                {
-                    Headers = new HeaderDictionary(),
-                    ContentType = "image/jpeg" // Set the content type based on your file type
-                };
-                file.Headers["Content-Disposition"] = $"form-data; name=\"image\"; filename=\"{fileName}\"";
-                cardVM.Image = file;
-            }
-            string base64String;
-            using (var ms = new MemoryStream())
-            {
-                cardVM.Image.CopyTo(ms);
-                var imageBytes = ms.ToArray();
-                base64String = Convert.ToBase64String(imageBytes);
-            }
-            TempData["ImageData"] = base64String;
-
             return View(cardVM);
         }
         [Route("{area}/Product/Manage/{id?}")]
         [HttpPost]
-        public IActionResult Manage(CardCreationVM cardVM, IFormFile image)
+        public IActionResult Manage(CardCreationVM cardVM)
         {
-            if (cardVM.Image == null)
+            if (cardVM.Image != null)  // user chose a new image
             {
-                // Retrieve the image from TempData and assign it to the model
-                var base64String = TempData["ImageData"] as string;
-                if (!string.IsNullOrEmpty(base64String))
-                {
-                    // Convert the Base64 string back to an IFormFile object
-                    byte[] imageBytes = Convert.FromBase64String(base64String);
-                    var file = new FormFile(new MemoryStream(imageBytes), 0, imageBytes.Length, "Image", "image.jpg");
-
-                    // Assign the retrieved image to the model
-                    cardVM.Image = file;
-                }
-            }
-
-            if (ModelState.IsValid)
-            {
-                var service = new ProductService();
                 string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
                 string fileName = cardVM.Image.FileName;
                 string filePath = Path.Combine(uploadDir, fileName);
@@ -182,22 +145,44 @@ namespace CardShop.Areas.Admin.Controllers
                 {
                     cardVM.Image.CopyTo(fileStream);
                 }
+            }
+            TradingCard updatedCard = cardVM.Card;
+
+            if (updatedCard.Player != null &&
+                (updatedCard.Price != null && updatedCard.Price > 0) &&
+                updatedCard.Year >= 1900 || updatedCard.Year <= DateTime.Now.Year &&
+                updatedCard.Manufacturer != null &&
+                updatedCard.Sport != null &&
+                updatedCard.Type != null &&
+                updatedCard.Quality != null)
+            {
+                var prodService = new ProductService();
+                var priceService = new PriceService();
+                
                 if (cardVM.Card.Description == null)
                     cardVM.Card.Description = String.Empty;
 
-                TradingCard updatedCard = cardVM.Card;
+                
 
-                var options = new ProductUpdateOptions
+                var updateOptions = new ProductUpdateOptions
                 {
                     Metadata = new Dictionary<string, string>
                     {
                         { "name", updatedCard.Player },
                         { "description", updatedCard.Description },
-                        { "metadata[default_price]", updatedCard.Price.ToString() },
                         { "active", updatedCard.IsForSale.ToString() }
-                    }
+                    },
+                    Name = updatedCard.Player,
+                    DefaultPrice = updatedCard.PriceId,
+                    Description = updatedCard.Description,
+                    Active = updatedCard.IsForSale
                 };
-                service.Update(updatedCard.ProductId, options);
+                var options = new PriceUpdateOptions
+                {
+                    Metadata = new Dictionary<string, string> { { "order_id", "6735" } },
+                };
+                priceService.Update(updatedCard.PriceId, options);
+                prodService.Update(updatedCard.ProductId, updateOptions);
                 cardDb.Update(updatedCard);
                 cardDb.Save();
                 return RedirectToAction("Index");
