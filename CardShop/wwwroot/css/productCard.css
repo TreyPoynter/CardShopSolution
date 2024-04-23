@@ -1,0 +1,40 @@
+﻿.card-img > img {
+    max-width: 100%;
+    min-width: 100%;
+}
+
+
+    .card-img:hover + .product-card-bottom > p {
+        text-decoration: underline;
+    }
+    .card-img:focus + .product-card-bottom > p {
+        text-decoration: underline;
+    }
+
+.product-card {
+    border: solid #c7c7c7 1px;
+    border-radius: 4px;
+    box-shadow: 10px 5px 5px #808080;
+    padding: 5px;
+    max-width: 70%;
+    background-color: #f8f9fa;
+    min-width: 50%;
+}
+
+.product-card-bottom > p {
+    font-size: 20px;
+}
+
+.product-card-bottom > form > button {
+    width: 100%;
+    padding: 3px !important;
+    box-shadow: 3px 3px 2px #b3afaf;
+}
+
+@media only screen and (max-width: 575px){
+    .row > div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
