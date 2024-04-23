@@ -74,7 +74,7 @@
         <label for="file" class="file-upload-label">
             <div class="file-upload-design">
                 
-                @if(Model.Image == null)
+                @if(Model.Card.ImageName == null)
                 {
                     <i class="fa-solid fa-image"></i>
                     <p>Drag and Drop</p>
@@ -83,8 +83,8 @@
                 }
                 else
                 {
-                    <img src="~/images/@Model.Image.FileName" alt="Uploaded Image" class="uploaded-image" />
-                    <span class="browse-button">@Model.Image.FileName</span>
+                    <img src="~/images/@Model.Card.ImageName" alt="Uploaded Image" class="uploaded-image" />
+                    <span class="browse-button">@Model.Card.ImageName</span>
                 }
             </div>
             <input id="file" name="image" type="file" accept="image/*" onchange="updateFileName(this)" asp-for="Image"/>
@@ -92,6 +92,7 @@
     </div>
     <input hidden asp-for="Card.ImageName" />
     <input hidden asp-for="Card.ProductId" />
+    <input hidden asp-for="Card.PriceId" />
     <input hidden asp-for="Card.Id" />
     @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
     <div class="d-flex mt-3">
