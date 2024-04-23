@@ -8,13 +8,21 @@
         <h2 class="display-3 ">@Model.Category</h2>
     </div>
 
-    <div class="row justify-content-between">
+    <div class="row">
         @foreach(TradingCard card in Model.Cards)
         {
             <div class="col-md-4 col-sm-6">
-                <div>
-                    <div>
-                        @card.Player
+                <div class="product-card mt-3">
+                    <a class="card-img" asp-action="Details" asp-route-slug="@card.Slug" asp-route-id="@card.Id">
+                        <img src="~/images/@card.ImageName" />
+                    </a>
+                    <div class="product-card-bottom">
+                        <p class="mt-1 mb-0">@card.Player</p>
+                        <p class="mb-1">@card.Price.Value.ToString("C")</p>
+                        <form>
+                            <button class="btn btn-dark">Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i></button>
+                        </form>
+                        
                     </div>
                 </div>
             </div>
