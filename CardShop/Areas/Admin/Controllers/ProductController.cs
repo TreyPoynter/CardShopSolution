@@ -3,14 +3,11 @@ using CardShop.Data;
 using CardShop.Data.Repository;
 using CardShop.Models;
 using CardShop.Models.Domain;
+using CardShop.Models.ExtensionMethods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
-using System.Drawing;
-using System.IO;
-using System.Net.Http;
-using System.Reflection;
 
 namespace CardShop.Areas.Admin.Controllers
 {
@@ -75,13 +72,7 @@ namespace CardShop.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var service = new ProductService();
-                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                string fileName = cardVM.Image.FileName;
-                string filePath = Path.Combine(uploadDir, fileName);
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    cardVM.Image.CopyTo(fileStream);
-                }
+                FileStreamExtensions.UploadImage(cardVM.Image, webHostEnvironment);
 
                 if (cardVM.Card.Description == null)
                     cardVM.Card.Description = String.Empty;
@@ -138,18 +129,13 @@ namespace CardShop.Areas.Admin.Controllers
         {
             if (cardVM.Image != null)  // user chose a new image
             {
-                string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
-                string fileName = cardVM.Image.FileName;
-                string filePath = Path.Combine(uploadDir, fileName);
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    cardVM.Image.CopyTo(fileStream);
-                }
+                FileStreamExtensions.UploadImage(cardVM.Image, webHostEnvironment);
+                cardVM.Card.ImageName = cardVM.Image.FileName;
             }
             TradingCard updatedCard = cardVM.Card;
 
             if (updatedCard.Player != null &&
-                (updatedCard.Price != null && updatedCard.Price > 0) &&
+                updatedCard.Price != null && updatedCard.Price > 0 &&
                 updatedCard.Year >= 1900 || updatedCard.Year <= DateTime.Now.Year &&
                 updatedCard.Manufacturer != null &&
                 updatedCard.Sport != null &&
@@ -162,27 +148,29 @@ namespace CardShop.Areas.Admin.Controllers
                 if (cardVM.Card.Description == null)
                     cardVM.Card.Description = String.Empty;
 
-                
+                var product = prodService.Get(updatedCard.ProductId);
+                Price priceToUpdate = priceService.Get(updatedCard.PriceId);
 
-                var updateOptions = new ProductUpdateOptions
+                if(priceToUpdate.UnitAmountDecimal != updatedCard.Price*100)
                 {
-                    Metadata = new Dictionary<string, string>
+                    var newPrice = priceService.Create(new PriceCreateOptions
                     {
-                        { "name", updatedCard.Player },
-                        { "description", updatedCard.Description },
-                        { "active", updatedCard.IsForSale.ToString() }
-                    },
-                    Name = updatedCard.Player,
-                    DefaultPrice = updatedCard.PriceId,
-                    Description = updatedCard.Description,
-                    Active = updatedCard.IsForSale
-                };
-                var options = new PriceUpdateOptions
+                        UnitAmountDecimal = updatedCard.Price * 100,
+                        Currency = "USD",
+                        Product = updatedCard.ProductId
+                    });
+                    product.DefaultPrice = newPrice;
+                }
+
+                // Save the changes
+                prodService.Update(updatedCard.ProductId, new ProductUpdateOptions
                 {
-                    Metadata = new Dictionary<string, string> { { "order_id", "6735" } },
-                };
-                priceService.Update(updatedCard.PriceId, options);
-                prodService.Update(updatedCard.ProductId, updateOptions);
+                    Name = updatedCard.Player,
+                    Description = updatedCard.Description,
+                    Active = updatedCard.IsForSale,
+                    DefaultPrice = priceToUpdate.Id,
+                });
+                updatedCard.PriceId = priceToUpdate.Id;
                 cardDb.Update(updatedCard);
                 cardDb.Save();
                 return RedirectToAction("Index");
