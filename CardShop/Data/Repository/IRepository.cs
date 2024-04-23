@@ -8,5 +8,6 @@
         void Update(T entity);
         void Delete(T entity);
         void Save();
+        IEnumerable<T> Search(params Func<T, bool>[] predicates);
     }
 }

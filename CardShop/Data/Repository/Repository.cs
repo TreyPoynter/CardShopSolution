@@ -25,7 +25,7 @@ namespace CardShop.Data.Repository
             if (options.HasWhere)
                 query = query.Where(options.Where);
             if (options.HasOrderBy)
-                query = query.Where(options.Where);
+                query = query.OrderBy(options.OrderBy);
             if (options.HasPaging)
                 query = query.Where(options.Where);
 
@@ -41,5 +41,17 @@ namespace CardShop.Data.Repository
         public void Delete(T entity) => _dbSet.Remove(entity);
 
         public void Save() => _context.SaveChanges();
+
+        public IEnumerable<T> Search(params Func<T, bool>[] predicates)
+        {
+            IEnumerable<T> query = _dbSet;
+
+            foreach (var predicate in predicates)
+            {
+                query = query.Where(predicate);
+            }
+
+            return query;
+        }
     }
 }
