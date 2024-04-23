@@ -47,6 +47,8 @@ namespace CardShop.Models.Domain
         public IEnumerable<Purchase> Purchases { get; set; }
         [ValidateNever]
         public string ProductId { get; set; } = String.Empty;
+        [ValidateNever]
+        public string PriceId { get; set; } = String.Empty;
 
         public TradingCard()
         {
