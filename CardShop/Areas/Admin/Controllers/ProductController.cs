@@ -148,16 +148,27 @@ namespace CardShop.Areas.Admin.Controllers
                     cardVM.Card.Description = String.Empty;
 
                 var product = prodService.Get(updatedCard.ProductId);
-                Price priceToUpdate = priceService.Get(updatedCard.PriceId);
+                Price? priceToUpdate = null;
+                try
+                {
+                    priceToUpdate = priceService.Get(updatedCard.PriceId);
+                }
+                catch(StripeException exc)  // if for some reason all prices are deleted
+                {
+                    priceToUpdate = new Price();
+                    Console.WriteLine(exc.Message);
+                }
 
-                if(priceToUpdate.UnitAmountDecimal != updatedCard.Price*100)
+                decimal? calculatedPrice = updatedCard.Price * 100.00m;
+                if(priceToUpdate.UnitAmountDecimal != calculatedPrice)
                 {
                     var newPrice = priceService.Create(new PriceCreateOptions
                     {
-                        UnitAmountDecimal = updatedCard.Price * 100,
+                        UnitAmountDecimal = calculatedPrice,
                         Currency = "USD",
                         Product = updatedCard.ProductId
                     });
+
                     product.DefaultPrice = newPrice;
                 }
 
@@ -167,9 +178,9 @@ namespace CardShop.Areas.Admin.Controllers
                     Name = updatedCard.Player,
                     Description = updatedCard.Description,
                     Active = updatedCard.IsForSale,
-                    DefaultPrice = priceToUpdate.Id,
+                    DefaultPrice = product.DefaultPriceId,
                 });
-                updatedCard.PriceId = priceToUpdate.Id;
+                updatedCard.PriceId = product.DefaultPriceId;
                 cardDb.Update(updatedCard);
                 cardDb.Save();
                 return RedirectToAction("Index");
@@ -180,6 +191,7 @@ namespace CardShop.Areas.Admin.Controllers
             cardVM.Types = typeDb.List(new QueryOptions<CardType>());
             return View(cardVM);
         }
+
 
     }
 }
