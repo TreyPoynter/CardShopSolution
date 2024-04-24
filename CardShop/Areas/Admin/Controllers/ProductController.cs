@@ -72,6 +72,7 @@ namespace CardShop.Areas.Admin.Controllers
             {
                 var service = new ProductService();
                 FileStreamExtensions.UploadImage(cardVM.Image, webHostEnvironment);
+                cardVM.Card.ImageName = cardVM.Image.FileName;
 
                 if (cardVM.Card.Description == null)
                     cardVM.Card.Description = String.Empty;
@@ -81,11 +82,11 @@ namespace CardShop.Areas.Admin.Controllers
                     Name = cardVM.Card.Player,
                     DefaultPriceData = new ProductDefaultPriceDataOptions
                     {
-                        UnitAmountDecimal = cardVM.Card.Price,
+                        UnitAmountDecimal = cardVM.Card.Price * 100,
                         Currency = "USD"
                     }
                     /*
-                     * (When we upload let's change the filePath to the URL)
+                     * (When we host live let's change the filePath to the URL)
                      * Images = new List<string> { filePath }
                     */
                 };
