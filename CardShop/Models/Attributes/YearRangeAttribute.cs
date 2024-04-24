@@ -17,7 +17,7 @@ namespace CardShop.Models.Attributes
             {
                 short year = (short)DateTime.Now.Year;
 
-                if ((short)value < _minYear && (short)value > year)
+                if ((short)value < _minYear || (short)value > year)
                 {
                     return new ValidationResult($"The {validationContext.DisplayName} must be between {_minYear} and {year}.");
                 }
