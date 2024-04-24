@@ -99,7 +99,7 @@
                 <div class="container py-1">
                     <div class="row justify-content-between">
                         <div class="col-md-4">
-                            <div class="dropdown">
+                            <div class="dropdown w-100">
                                 <button id="categories" class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
                                     <i class="fa-solid fa-layer-group me-2"></i>
                                     Categories
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <form asp-action="Search" asp-controller="Card" method="post">
+                            <form asp-action="Search" asp-controller="Card" method="post" class="w-100">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="search" placeholder="Search Products...">
                                     <button class="btn btn-dark" type="submit">
