@@ -14,7 +14,7 @@ var connectionString = builder.Configuration.GetConnectionString(connectionName)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
+builder.Services.AddSession();
 builder.Services.AddRouting(opts =>
 {
     opts.LowercaseUrls = true;
@@ -43,6 +43,8 @@ else
 }
 
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:ApiKey").Get<string>();
+
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
