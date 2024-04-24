@@ -1,17 +1,5 @@
-﻿.card-img > img {
-    max-width: 100%;
-    min-width: 100%;
-}
-
-
-    .card-img:hover + .product-card-bottom > p {
-        text-decoration: underline;
-    }
-    .card-img:focus + .product-card-bottom > p {
-        text-decoration: underline;
-    }
-
-.product-card {
+﻿.product-card {
+    position: relative; /* Set position relative for absolute positioning inside */
     border: solid #c7c7c7 1px;
     border-radius: 4px;
     box-shadow: 10px 5px 5px #808080;
@@ -19,22 +7,86 @@
     max-width: 70%;
     background-color: #f8f9fa;
     min-width: 50%;
+    height: 100%;
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack children vertically */
 }
+
+.card-img {
+    overflow: hidden; /* Ensure that images don't overflow */
+    position: relative;
+}
+
+    .card-img > img {
+        width: 100%;
+        height: auto; /* Maintain aspect ratio */
+        max-height: 400px;
+        min-height: 400px;
+    }
+
+    .card-img:hover + .product-card-bottom > p {
+        text-decoration: underline;
+    }
+
+    .card-img:focus + .product-card-bottom > p {
+        text-decoration: underline;
+    }
 
 .product-card-bottom > p {
     font-size: 20px;
 }
 
-.product-card-bottom > form > button {
-    width: 100%;
-    padding: 3px !important;
-    box-shadow: 3px 3px 2px #b3afaf;
-}
+    .product-card-bottom > p:first-child:hover {
+        text-decoration: underline;
+    }
 
+.product-card > form {
+    margin-top: auto;
+}
+    .product-card > form > button {
+        width: 100%;
+        padding: 3px !important;
+        box-shadow: 3px 3px 2px #b3afaf;
+    }
+
+
+
+
+@media only screen and (max-width: 1399px) {
+    .card-img > img {
+        max-height: 300px;
+        min-height: 300px;
+    }
+}
+@media only screen and (max-width: 991px) {
+    .card-img > img {
+        max-height: 200px;
+        min-height: 200px;
+    }
+}
 @media only screen and (max-width: 575px){
     .row > div {
         display: flex;
         justify-content: center;
     }
-
+    .product-card {
+        max-width: 60%;
+        min-width: 60%;
+    }
+    .card-img > img {
+        max-height: 400px;
+        min-height: 400px;
+    }
+}
+@media only screen and (max-width: 445px) {
+    .card-img > img {
+        max-height: 300px;
+        min-height: 300px;
+    }
+}
+@media only screen and (max-width: 445px) {
+    .card-img > img {
+        max-height: 200px;
+        min-height: 200px;
+    }
 }
