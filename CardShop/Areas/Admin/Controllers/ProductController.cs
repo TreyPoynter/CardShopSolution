@@ -147,7 +147,21 @@ namespace CardShop.Areas.Admin.Controllers
                 if (cardVM.Card.Description == null)
                     cardVM.Card.Description = String.Empty;
 
-                var product = prodService.Get(updatedCard.ProductId);
+                Product? product = null;
+                try
+                {
+                    product = prodService.Get(updatedCard.ProductId);
+                }
+                catch (StripeException exc)
+                {
+                    ModelState.AddModelError("", exc.Message);
+                    cardVM.Sports = sportDb.List(new QueryOptions<Sport>());
+                    cardVM.Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>());
+                    cardVM.Qualities = qualityDb.List(new QueryOptions<Quality>());
+                    cardVM.Types = typeDb.List(new QueryOptions<CardType>());
+                    return View(cardVM);
+                }
+
                 Price? priceToUpdate = null;
                 try
                 {
