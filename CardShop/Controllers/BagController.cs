@@ -33,7 +33,7 @@ namespace CardShop.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToBag(int id, int numItems)
+        public IActionResult AddToBag(int id, int numItems = 1)
         {
             TradingCard? addedItem = _cardDb.Get(id);
 
@@ -56,7 +56,7 @@ namespace CardShop.Controllers
 
             HttpContext.Session.Set(SESSION_KEY, cartItems);
 
-            return RedirectToAction("ViewCart");
+            return RedirectToAction("Index");
         }
 
         public IActionResult RemoveFromCart(int id)
@@ -77,7 +77,7 @@ namespace CardShop.Controllers
             }
 
             HttpContext.Session.Set(SESSION_KEY, cartItems);
-            return RedirectToAction("ViewCart");
+            return RedirectToAction("Index");
         }
 
         public IActionResult Checkout()
@@ -105,6 +105,26 @@ namespace CardShop.Controllers
 
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeQuantity(int amount, int id)
+        {
+            List<CartItem> cartItems = HttpContext.Session.Get<List<CartItem>>(SESSION_KEY) ?? new List<CartItem>();
+            CartItem? item = cartItems.FirstOrDefault(i => i.TradingCard.Id == id);
+
+            if (item != null)
+            {
+                item.Amount += amount;
+                if (item.Amount < 1)
+                {
+                    cartItems.Remove(item);
+                }
+            }
+
+            HttpContext.Session.Set(SESSION_KEY, cartItems);
+
+            return RedirectToAction("Index");
         }
 
     }
