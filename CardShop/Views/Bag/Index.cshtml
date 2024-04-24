@@ -1,5 +1,44 @@
-﻿@{
+﻿@model ShoppingCartVM
+@{
     ViewBag.Title = "Your Bag";
 }
 
 <h3 class="text-center display-3">Your Bag</h3>
+<div class="container shopping-bag">
+    @foreach (var item in Model.CartItems)
+    {
+        <div class="bag-item">
+            <img src="~/images/@item.TradingCard.ImageName" width="100px"/>
+            <div class="w-50">
+                <div>
+                    <p class="item-name">@item.TradingCard.Player</p>
+                    <p class="item-description">@item.TradingCard.Description</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-end w-100">
+                <div class="mt-auto me-5">
+                    <div class="item-amt mb-3">
+                        <form asp-action="ChangeQuantity" method="post">
+                            <input hidden name="amount" value="-1" />
+                            <input hidden name="id" value="@item.TradingCard.Id" />
+                            <button type="submit" class="quantity-button">-</button>
+                        </form>
+                        <p class="m-0">@item.Amount</p>
+                        <form asp-action="ChangeQuantity" method="post">
+                            <input hidden name="amount" value="1" />
+                            <input hidden name="id" value="@item.TradingCard.Id" />
+                            <button type="submit" class="quantity-button">+</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="d-flex align-items-center ">
+                    <button class="item-trash-button">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
