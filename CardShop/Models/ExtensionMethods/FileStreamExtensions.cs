@@ -4,7 +4,7 @@ namespace CardShop.Models.ExtensionMethods
 {
     public static class FileStreamExtensions
     {
-        public static void UploadImage(IFormFile file, IWebHostEnvironment hostEnvironment) 
+        public static string UploadImage(IFormFile file, IWebHostEnvironment hostEnvironment) 
         {
             string uploadDir = Path.Combine(hostEnvironment.WebRootPath, "images");
             string fileName = file.FileName;
@@ -13,6 +13,7 @@ namespace CardShop.Models.ExtensionMethods
             {
                 file.CopyTo(fileStream);
             }
+            return filePath;
         }
     }
 }
