@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace PizzaMenu.Utilities
+namespace CardShop.Models.ExtensionMethods
 {
     public static class SessionExtensions
     {
