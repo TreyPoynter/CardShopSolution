@@ -66,14 +66,7 @@ namespace CardShop.Controllers
 
             if (itemToRemove != null)
             {
-                if (itemToRemove.Amount > 1)
-                {
-                    itemToRemove.Amount -= 1;
-                }
-                else
-                {
-                    cartItems.Remove(itemToRemove);
-                }
+                cartItems.Remove(itemToRemove);
             }
 
             HttpContext.Session.Set(SESSION_KEY, cartItems);
