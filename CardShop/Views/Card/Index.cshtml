@@ -31,6 +31,7 @@
                         <p class="mb-1">@card.Price.Value.ToString("C")</p>
                     </div>
                     <form asp-controller="Bag" asp-action="AddToBag" class="align-content-end">
+                        <input hidden name="id" value="@card.Id" />
                         <button class="btn btn-dark" type="submit">
                             Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i>
                         </button>
