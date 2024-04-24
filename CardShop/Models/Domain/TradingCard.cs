@@ -9,7 +9,7 @@ namespace CardShop.Models.Domain
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "A Player is required")]
-        public string? Player {  get; set; }
+        public string? Player { get; set; } = String.Empty;
         [ValidateNever]
         public string Description { get; set; } = String.Empty;
         [Required(ErrorMessage = "A Price is required")]
@@ -51,7 +51,7 @@ namespace CardShop.Models.Domain
         public string PriceId { get; set; } = String.Empty;
 
         [NotMapped]
-        public string Slug => $"{Player.ToLower().Replace(' ', '-')}";
+        public string? Slug => $"{Player?.ToLower().Replace(' ', '-')}";
 
         public TradingCard()
         {
