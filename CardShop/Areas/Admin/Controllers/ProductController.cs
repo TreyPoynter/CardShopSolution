@@ -136,11 +136,11 @@ namespace CardShop.Areas.Admin.Controllers
 
             if (updatedCard.Player != null &&
                 updatedCard.Price != null && updatedCard.Price > 0 &&
-                updatedCard.Year >= 1900 || updatedCard.Year <= DateTime.Now.Year &&
-                updatedCard.Manufacturer != null &&
-                updatedCard.Sport != null &&
-                updatedCard.Type != null &&
-                updatedCard.Quality != null)
+                updatedCard.Year >= 1900 && updatedCard.Year <= DateTime.Now.Year &&
+                updatedCard.ManufactuererId > 0 &&
+                updatedCard.SportId > 0 &&
+                updatedCard.TypeId > 0 &&
+                updatedCard.QualityId > 0)
             {
                 var prodService = new ProductService();
                 var priceService = new PriceService();
