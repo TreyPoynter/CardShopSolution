@@ -26,15 +26,15 @@
                     <a class="card-img" asp-action="Details" asp-route-slug="@card.Slug" asp-route-id="@card.Id">
                         <img src="~/images/@card.ImageName" />
                     </a>
-                    <div class="product-card-bottom">
+                    <div class="product-card-bottom d-flex flex-column">
                         <p class="mt-1 mb-0">@card.Type.Name @card.Player</p>
                         <p class="mb-1">@card.Price.Value.ToString("C")</p>
-                        <form asp-controller="Bag" asp-action="AddToBag">
-                            <button class="btn btn-dark" type="submit">
-                                Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i>
-                            </button>
-                        </form>
                     </div>
+                    <form asp-controller="Bag" asp-action="AddToBag" class="align-content-end">
+                        <button class="btn btn-dark" type="submit">
+                            Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         }
