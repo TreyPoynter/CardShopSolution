@@ -1,0 +1,67 @@
+﻿.bag-item {
+    display: flex;
+    border: solid #c7c7c7 1px;
+    border-radius: 4px;
+    box-shadow: 10px 5px 5px #808080;
+    background-color: #f8f9fa;
+    padding: 5px;
+}
+
+.bag-item > img {
+    display: flex;
+    margin-right: 1.5rem;
+}
+
+.item-name {
+    font-size: 17px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.item-description {
+    width: 50%
+}
+
+.item-trash-button {
+    background-color: #f8f9fa;
+    border-color: #dc3545;
+    color: #dc3545;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.quantity-button {
+    border: none;
+    background-color: lightgreen;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px; /* Adjust font size as needed */
+    cursor: pointer;
+}
+
+.item-amt {
+    display: flex;
+    align-items: center; /* Aligns buttons vertically with amount */
+}
+
+
+.item-trash-button {
+    background-color: #f8f9fa;
+    border-color: #dc3545;
+    color: #dc3545;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+    .item-trash-button:hover {
+        background-color: #dc3545;
+        color: #f8f9fa;
+    }
+
+.item-amt {
+    display: flex;
+}
