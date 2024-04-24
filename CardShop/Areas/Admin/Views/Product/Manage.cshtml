@@ -97,7 +97,6 @@
     <input hidden asp-for="Card.ProductId" />
     <input hidden asp-for="Card.PriceId" />
     <input hidden asp-for="Card.Id" />
-    @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
     <div class="d-flex mt-3">
         <button type="submit" class="btn btn-primary">Update</button>
         <a asp-action="Index" asp-controller="Product" class="btn btn-secondary ms-3">Cancel</a>
