@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Views\Payment\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
