@@ -1,12 +1,12 @@
 ﻿@inject SignInManager<User> UserManager
 @{
     var current = ViewContext.RouteData.Values["area"]?.ToString() ??
+                ViewContext.RouteData.Values["id"]?.ToString() ??
                 ViewContext.RouteData.Values["controller"]!.ToString() ?? "";
 
     string Active(string value)
     {
-        string id = Context.Request.Path.ToString();
-        return id.Contains(value) ? "active" : "";
+        return current.ContainsNoCase(value) ? "active" : "";
     }
 }
 <!DOCTYPE html>
