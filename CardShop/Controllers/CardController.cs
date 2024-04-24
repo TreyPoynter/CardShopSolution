@@ -46,12 +46,20 @@ namespace CardShop.Controllers
                 }),
                 IsSearching = true
             };
-            cardsCategoryVM.Cards = _cardDb.Search(
+            if (!String.IsNullOrWhiteSpace(search))
+            {
+                cardsCategoryVM.Cards = _cardDb.Search(
                 c => c.Player.ContainsNoCase(search) ||
                 c.Description.ContainsNoCase(search) ||
                 c.Type.Name.ContainsNoCase(search) ||
                 c.Manufacturer.Name.ContainsNoCase(search) ||
                 c.Sport.Name.ContainsNoCase(search));
+            }else
+            {
+                cardsCategoryVM.IsSearching = false;
+                cardsCategoryVM.Category = "All Cards";
+            }
+            
             return View("Index", cardsCategoryVM);
         }
     }
