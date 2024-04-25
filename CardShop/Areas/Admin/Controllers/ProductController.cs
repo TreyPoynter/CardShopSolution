@@ -7,6 +7,7 @@ using CardShop.Models.ExtensionMethods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
+using Stripe.Issuing;
 
 namespace CardShop.Areas.Admin.Controllers
 {
@@ -20,6 +21,7 @@ namespace CardShop.Areas.Admin.Controllers
         private Repository<Manufacturer> manufacturerDb {  get; set; }
         private Repository<Quality> qualityDb {  get; set; }
         private Repository<CardType> typeDb {  get; set; }
+        private Repository<Team> teamDb {  get; set; }
 
         public ProductController(ApplicationDbContext ctx, IWebHostEnvironment webHostEnv)
         {
@@ -28,6 +30,7 @@ namespace CardShop.Areas.Admin.Controllers
             manufacturerDb = new Repository<Manufacturer>(ctx);
             qualityDb = new Repository<Quality>(ctx);
             typeDb = new Repository<CardType>(ctx);
+            teamDb = new Repository<Team>(ctx);
             webHostEnvironment = webHostEnv;
 
         }
@@ -40,7 +43,7 @@ namespace CardShop.Areas.Admin.Controllers
                 Search = search,
                 Items = cardDb.List(new QueryOptions<TradingCard>()
                 {
-                    Includes = "Type, Quality, Manufacturer, Sport"
+                    Includes = "Quality, Manufacturer, Sport"
                 })
             };
 
@@ -55,13 +58,9 @@ namespace CardShop.Areas.Admin.Controllers
         {
             CardCreationVM newCard = new CardCreationVM() 
             {
-                Card = new TradingCard(),
-                Sports = sportDb.List(new QueryOptions<Sport>()),
-                Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>()),
-                Qualities = qualityDb.List(new QueryOptions<Quality>()),
-                Types = typeDb.List(new QueryOptions<CardType>())
+                Card = new TradingCard()
             };
-
+            GetModelProperties(ref newCard);
             return View(newCard);
         }
         [Route("{area}/Product/Add")]
@@ -93,16 +92,19 @@ namespace CardShop.Areas.Admin.Controllers
 
                 var result = service.Create(options);
                 TradingCard card = cardVM.Card;
+
+                foreach (int id in card.SelectedTypeId)
+                {
+                    card.Types.Add(typeDb.Get(id));
+                }
+
                 card.ProductId = result.Id;
                 card.PriceId = result.DefaultPriceId;
                 cardDb.Add(card);
                 cardDb.Save();
                 return RedirectToAction("Index");
             }
-            cardVM.Sports = sportDb.List(new QueryOptions<Sport>());
-            cardVM.Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>());
-            cardVM.Qualities = qualityDb.List(new QueryOptions<Quality>());
-            cardVM.Types = typeDb.List(new QueryOptions<CardType>());
+            GetModelProperties(ref cardVM);
             return View(cardVM);
         }
 
@@ -115,12 +117,8 @@ namespace CardShop.Areas.Admin.Controllers
             CardCreationVM cardVM = new CardCreationVM()
             {
                 Card = cardToEdit,
-                Sports = sportDb.List(new QueryOptions<Sport>()),
-                Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>()),
-                Qualities = qualityDb.List(new QueryOptions<Quality>()),
-                Types = typeDb.List(new QueryOptions<CardType>())
             };
-
+            GetModelProperties(ref cardVM);
             return View(cardVM);
         }
         [Route("{area}/Product/Manage/{id?}")]
@@ -139,7 +137,8 @@ namespace CardShop.Areas.Admin.Controllers
                 updatedCard.Year >= 1900 && updatedCard.Year <= DateTime.Now.Year &&
                 updatedCard.ManufactuererId > 0 &&
                 updatedCard.SportId > 0 &&
-                updatedCard.TypeId > 0 &&
+                updatedCard.TeamId > 0 &&
+                updatedCard.SelectedTypeId.Count > 0 &&
                 updatedCard.QualityId > 0)
             {
                 var prodService = new ProductService();
@@ -156,10 +155,7 @@ namespace CardShop.Areas.Admin.Controllers
                 catch (StripeException exc)
                 {
                     ModelState.AddModelError("", exc.Message);
-                    cardVM.Sports = sportDb.List(new QueryOptions<Sport>());
-                    cardVM.Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>());
-                    cardVM.Qualities = qualityDb.List(new QueryOptions<Quality>());
-                    cardVM.Types = typeDb.List(new QueryOptions<CardType>());
+                    GetModelProperties(ref cardVM);
                     return View(cardVM);
                 }
 
@@ -200,13 +196,17 @@ namespace CardShop.Areas.Admin.Controllers
                 cardDb.Save();
                 return RedirectToAction("Index");
             }
-            cardVM.Sports = sportDb.List(new QueryOptions<Sport>());
-            cardVM.Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>());
-            cardVM.Qualities = qualityDb.List(new QueryOptions<Quality>());
-            cardVM.Types = typeDb.List(new QueryOptions<CardType>());
+            GetModelProperties(ref cardVM);
             return View(cardVM);
         }
 
-
+        private void GetModelProperties(ref CardCreationVM cardCreationVM)
+        {
+            cardCreationVM.Sports = sportDb.List(new QueryOptions<Sport>());
+            cardCreationVM.Manufacturers = manufacturerDb.List(new QueryOptions<Manufacturer>());
+            cardCreationVM.Qualities = qualityDb.List(new QueryOptions<Quality>());
+            cardCreationVM.Types = typeDb.List(new QueryOptions<CardType>());
+            cardCreationVM.Teams = teamDb.List(new QueryOptions<Team>());
+        }
     }
 }
