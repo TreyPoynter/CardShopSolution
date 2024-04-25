@@ -79,6 +79,7 @@ namespace CardShop.Controllers
             var domain = "https://localhost:7109";
             var options = new SessionCreateOptions
             {
+                BillingAddressCollection = "required",
                 LineItems = new List<SessionLineItemOptions>(),
                 Mode = "payment",
                 SuccessUrl = domain + "/Payment/Success",
