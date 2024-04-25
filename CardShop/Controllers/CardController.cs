@@ -46,9 +46,10 @@ namespace CardShop.Controllers
                 }),
                 IsSearching = true
             };
-            string[] searchTerms = search.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            
             if (!String.IsNullOrWhiteSpace(search))
             {
+                string[] searchTerms = search.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
                 cardsCategoryVM.Cards = _cardDb.Search(
                 c => c.Player.ContainsNoCase(search) ||
                 c.Description.ContainsNoCase(search) ||
