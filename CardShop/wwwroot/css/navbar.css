@@ -59,6 +59,10 @@ a.dropdown-item {
         z-index: 1000;
     }
 
+    .invisible {
+        display: none !important;
+    }
+
     #links > .nav-item > .nav-link {
         text-decoration: none;
         position: relative;

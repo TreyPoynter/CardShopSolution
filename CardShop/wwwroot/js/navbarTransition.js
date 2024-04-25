@@ -1,9 +1,9 @@
 ﻿window.addEventListener("scroll", () => {
-    const middle = document.getElementById("middle-nav");
+    const middle = document.getElementById("fixed-middle-nav");
 
     if (window.scrollY >= 124) {
-        middle.classList.add("fixed-middle-nav");
+        middle.classList.remove("invisible");
     } else {
-        middle.classList.remove("fixed-middle-nav");
+        middle.classList.add("invisible");
     }
 });
