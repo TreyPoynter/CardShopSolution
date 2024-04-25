@@ -31,6 +31,14 @@
         @Html.ValidationMessageFor(m => m.Card.Number, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Teams, "TeamId", "Name"))"
+                asp-for="Card.TeamId">
+            <option value="">-- Select a Team --</option>
+        </select>
+        @Html.LabelFor(m => m.Teams)
+        @Html.ValidationMessageFor(m => m.Card.TeamId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Manufacturers, "ManufacturerId", "Name"))"
             asp-for="Card.ManufactuererId">
             <option value="">-- Select a Manufacturer --</option>
@@ -48,16 +56,16 @@
     </div>
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Types, "TypeId", "Name"))"
-            asp-for="Card.TypeId">
-            <option value="">-- Select a Type --</option>
+                asp-for="Card.SelectedTypeId" multiple style="height: 150px;">
+            
         </select>
         @Html.LabelFor(m => m.Types)
-        @Html.ValidationMessageFor(m => m.Card.TypeId, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.Card.SelectedTypeId, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Qualities, "QualityId", "Type"))"
                 asp-for="Card.QualityId">
-            <option value="">-- Select a Type --</option>
+            <option value="">-- Select a Quality --</option>
         </select>
         @Html.LabelFor(m => m.Qualities)
         @Html.ValidationMessageFor(m => m.Card.QualityId, "", new { @class = "text-danger" })
