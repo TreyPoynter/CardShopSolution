@@ -62,7 +62,10 @@ namespace CardShop.Controllers
         public async Task<IActionResult> Register(RegisterVM model)
         {
             if(!ModelState.IsValid)
+            {
                 return View(model);
+            }
+                
 
             User newUser = new()
             {
@@ -79,6 +82,10 @@ namespace CardShop.Controllers
                 await _signInManager.PasswordSignInAsync(newUser, model.Password, isPersistent: false,
                     lockoutOnFailure: false);
                 return RedirectToAction("Index", "Home");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
             }
             return View(model);
         }

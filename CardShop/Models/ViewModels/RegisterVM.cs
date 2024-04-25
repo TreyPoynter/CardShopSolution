@@ -13,6 +13,7 @@ namespace CardShop.Models.ViewModels
         public string? Email { get; set; }
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
+        [Compare(nameof(ConfirmPassword), ErrorMessage = "Passwords must match")]
         public string? Password { get; set; }
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = "Passwords must match")]
