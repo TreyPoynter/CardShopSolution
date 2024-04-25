@@ -18,9 +18,12 @@ namespace CardShop.Areas.Admin.Models.ViewModels
         [Display(Name = "Quality")]
         [ValidateNever]
         public IEnumerable<Quality> Qualities { get; set; } = null!;
-        [Display(Name = "Type")]
+        [Display(Name = "Types")]
         [ValidateNever]
         public IEnumerable<CardType> Types { get; set; } = null!;
+        [Display(Name = "Team")]
+        [ValidateNever]
+        public IEnumerable<Team> Teams { get; set; } = null!;
 
 
         public TradingCard Card { get; set; }
