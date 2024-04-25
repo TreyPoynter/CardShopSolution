@@ -56,10 +56,10 @@
     </div>
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Types, "TypeId", "Name"))"
-                asp-for="Card.TypeId">
+                asp-for="Card.SelectedTypeId">
         </select>
         @Html.LabelFor(m => m.Types)
-        @Html.ValidationMessageFor(m => m.Card.TypeId, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.Card.SelectedTypeId, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Qualities, "QualityId", "Type"))"

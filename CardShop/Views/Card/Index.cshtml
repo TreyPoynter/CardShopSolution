@@ -8,7 +8,7 @@
         @if (Model.IsSearching)
         {
             <h2 class="mt-3">
-                @Model.Cards.Count() result@(Model.Cards.Count() > 1 ? "s" : "") for @Model.Category
+                @Model.Cards.Count() result@(Model.Cards.Count() == 1 ? "" : "s") for @Model.Category
             </h2>
         }
         else
@@ -27,7 +27,7 @@
                         <img src="~/images/@card.ImageName" />
                     </a>
                     <div class="product-card-bottom d-flex flex-column">
-                        <p class="mt-1 mb-0">@card.Type.Name @card.Player</p>
+                        <p class="mb-0">@card.Player</p>
                         <p class="mb-1">@card.Price.Value.ToString("C")</p>
                     </div>
                     <form asp-controller="Bag" asp-action="AddToBag" class="align-content-end">

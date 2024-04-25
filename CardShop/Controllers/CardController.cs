@@ -26,7 +26,7 @@ namespace CardShop.Controllers
                 {
                     OrderBy = c => c.Player,
                     Where = c => c.Sport.Name == id,
-                    Includes = "Type, Quality, Manufacturer, Sport"
+                    Includes = "Types, Quality, Manufacturer, Sport, Team"
                 })
             };
 
@@ -42,7 +42,7 @@ namespace CardShop.Controllers
                 Cards = _cardDb.List(new QueryOptions<TradingCard>()
                 {
                     OrderBy = c => c.Player,
-                    Includes = "Type, Quality, Manufacturer, Sport",
+                    Includes = "Types, Quality, Manufacturer, Sport, Team",
                 }),
                 IsSearching = true
             };
@@ -51,7 +51,8 @@ namespace CardShop.Controllers
                 cardsCategoryVM.Cards = _cardDb.Search(
                 c => c.Player.ContainsNoCase(search) ||
                 c.Description.ContainsNoCase(search) ||
-                c.Type.Name.ContainsNoCase(search) ||
+                c.Team.Name.ContainsNoCase(search) ||
+                c.Types.ToList().FindAll(t => t.Name.ContainsNoCase(search)).Count > 0  ||
                 c.Manufacturer.Name.ContainsNoCase(search) ||
                 c.Sport.Name.ContainsNoCase(search));
             }else

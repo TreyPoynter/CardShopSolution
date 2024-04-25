@@ -13,15 +13,15 @@ namespace CardShop.Models.Domain
         [ValidateNever]
         public string Description { get; set; } = String.Empty;
         [Required(ErrorMessage = "A Price is required")]
-        [Range(1.0d, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
+        [Range(.01d, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public decimal? Price { get; set; }
         [Display(Name = "Is Listed")]
         public bool IsForSale { get; set; } = true;
-        [Required(ErrorMessage = "A Card Type is required")]
-        public int? TypeId { get; set; }
-        [ForeignKey(nameof(TypeId))]
-        [ValidateNever]
-        public CardType Type { get; set; }
+        [Required]
+        [NotMapped]
+        public List<int>? SelectedTypeId { get; set; }
+        [ForeignKey("TypeId")]
+        public ICollection<CardType> Types { get; set; }
         [Required(ErrorMessage = "A Card Number is required")]
         public uint? Number { get; set; }
         [ValidateNever]
@@ -44,6 +44,11 @@ namespace CardShop.Models.Domain
         [ForeignKey(nameof(SportId))]
         [ValidateNever]
         public Sport Sport { get; set; }
+        [Required(ErrorMessage = "Card Team is required")]
+        public int? TeamId { get; set; }
+        [ForeignKey(nameof(TeamId))]
+        [ValidateNever]
+        public Team Team { get; set; }
         public IEnumerable<Purchase> Purchases { get; set; }
         [ValidateNever]
         public string ProductId { get; set; } = String.Empty;
@@ -57,6 +62,7 @@ namespace CardShop.Models.Domain
         {
             Description = String.Empty;
             Purchases = new List<Purchase>();
+            Types = new List<CardType>();
         }
     }
 }
