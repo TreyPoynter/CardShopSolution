@@ -23,13 +23,17 @@
                             <form asp-action="ChangeQuantity" method="post">
                                 <input hidden name="amount" value="-1" />
                                 <input hidden name="id" value="@item.TradingCard.Id" />
-                                <button type="submit" class="quantity-button">-</button>
+                                <button type="submit" class="quantity-button">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
                             </form>
                             <p class="m-0">@item.Amount</p>
                             <form asp-action="ChangeQuantity" method="post">
                                 <input hidden name="amount" value="1" />
                                 <input hidden name="id" value="@item.TradingCard.Id" />
-                                <button type="submit" class="quantity-button">+</button>
+                                <button type="submit" class="quantity-button">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
                             </form>
                         </div>
 
@@ -48,11 +52,14 @@
                 <p class="fs-4">@Model.TotalPrice.ToString("C2")</p>
             </div>
             <div class="d-flex justify-content-end">
-                <button class="btn btn-stripe"><p class="p-0 m-0">Checkout with</p> <i class="fa-brands fa-stripe"></i></button>
+                <form action="Checkout">
+                    <button class="btn btn-stripe"><p class="p-0 m-0">
+                        Checkout with</p> <i class="fa-brands fa-stripe"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
-    
 }
 else
 {
@@ -60,5 +67,3 @@ else
         <p class="text-center fs-4">No items in bag</p>
     </div>
 }
-
-
