@@ -10,6 +10,19 @@ namespace CardShop.Data.Configurations
         {
             builder.HasMany(c => c.Purchases)
                 .WithOne(p => p.CardBought);
+
+            builder.HasMany(c => c.Types)
+                .WithMany(t => t.Cards)
+                .UsingEntity<Dictionary<string, object>>(
+                    "TypesOfCards",
+                    ba => ba.HasOne<CardType>()
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Restrict),
+                    ba => ba.HasOne<TradingCard>()
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Restrict));
         }
     }
 }

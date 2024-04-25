@@ -20,6 +20,7 @@ namespace CardShop.Data
         public DbSet<Quality> Qualities { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Sport> Sports { get; set; }
+        public DbSet<Team> Teams { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -31,6 +32,7 @@ namespace CardShop.Data
             builder.ApplyConfiguration(new QualityConfig());
             builder.ApplyConfiguration(new ManufacturerConfig());
             builder.ApplyConfiguration(new SportConfig());
+            builder.ApplyConfiguration(new TeamConfig());
         }
     }
 }
