@@ -68,6 +68,18 @@ namespace CardShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CardTypeTradingCard",
+                columns: table => new
+                {
+                    CardId = table.Column<int>(type: "int", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CardTypeTradingCard", x => new { x.CardId, x.TypeId });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Manufacturers",
                 columns: table => new
                 {
@@ -104,6 +116,19 @@ namespace CardShop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sports", x => x.SportId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teams",
+                columns: table => new
+                {
+                    TeamId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teams", x => x.TeamId);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,27 +243,23 @@ namespace CardShop.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Player = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Player = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     IsForSale = table.Column<bool>(type: "bit", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false),
-                    Number = table.Column<long>(type: "bigint", nullable: true),
+                    Number = table.Column<long>(type: "bigint", nullable: false),
                     ImageName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Year = table.Column<short>(type: "smallint", nullable: true),
+                    Year = table.Column<short>(type: "smallint", nullable: false),
                     QualityId = table.Column<int>(type: "int", nullable: false),
                     ManufactuererId = table.Column<int>(type: "int", nullable: false),
-                    SportId = table.Column<int>(type: "int", nullable: false)
+                    SportId = table.Column<int>(type: "int", nullable: false),
+                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PriceId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cards", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cards_CardTypes_TypeId",
-                        column: x => x.TypeId,
-                        principalTable: "CardTypes",
-                        principalColumn: "TypeId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Cards_Manufacturers_ManufactuererId",
                         column: x => x.ManufactuererId,
@@ -256,6 +277,12 @@ namespace CardShop.Migrations
                         column: x => x.SportId,
                         principalTable: "Sports",
                         principalColumn: "SportId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cards_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "TeamId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -283,6 +310,30 @@ namespace CardShop.Migrations
                         principalTable: "Cards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TypesOfCards",
+                columns: table => new
+                {
+                    CardId = table.Column<int>(type: "int", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TypesOfCards", x => new { x.CardId, x.TypeId });
+                    table.ForeignKey(
+                        name: "FK_TypesOfCards_CardTypes_TypeId",
+                        column: x => x.TypeId,
+                        principalTable: "CardTypes",
+                        principalColumn: "TypeId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TypesOfCards_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
@@ -349,6 +400,164 @@ namespace CardShop.Migrations
                     { 8, "MMA" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Teams",
+                columns: new[] { "TeamId", "Name" },
+                values: new object[,]
+                {
+                    { 11, "Atlanta Braves" },
+                    { 12, "Atlanta Falcons" },
+                    { 13, "Atlanta Hawks" },
+                    { 14, "Atlanta United" },
+                    { 15, "Austin FC" },
+                    { 16, "Baltimore Orioles" },
+                    { 17, "Baltimore Ravens" },
+                    { 18, "Boston Red Sox" },
+                    { 19, "New England Patriots" },
+                    { 20, "Boston Celtics" },
+                    { 21, "Boston Bruins" },
+                    { 22, "New England Revolution" },
+                    { 23, "Buffalo Bills" },
+                    { 24, "Buffalo Sabres" },
+                    { 25, "Calgary Flames" },
+                    { 26, "Carolina Panthers" },
+                    { 27, "Charlotte Hornets" },
+                    { 28, "Charlotte FC" },
+                    { 29, "Chicago Cubs" },
+                    { 30, "Chicago White Sox" },
+                    { 31, "Chicago Bears" },
+                    { 32, "Chicago Bulls" },
+                    { 33, "Chicago Blackhawks" },
+                    { 34, "Chicago Fire" },
+                    { 35, "Cincinnati Reds" },
+                    { 36, "Cincinnati Bengals" },
+                    { 37, "FC Cincinnati" },
+                    { 38, "Cleveland Guardians" },
+                    { 39, "Cleveland Browns" },
+                    { 40, "Cleveland Cavaliers" },
+                    { 41, "Columbus Blue Jackets" },
+                    { 42, "Columbus Crew" },
+                    { 43, "Texas Rangers" },
+                    { 44, "Dallas Cowboys" },
+                    { 45, "Dallas Mavericks" },
+                    { 46, "Dallas Stars" },
+                    { 47, "FC Dallas" },
+                    { 48, "Colorado Rockies" },
+                    { 49, "Denver Broncos" },
+                    { 50, "Denver Nuggets" },
+                    { 51, "Colorado Avalanche" },
+                    { 52, "Colorado Rapids" },
+                    { 53, "Detroit Tigers" },
+                    { 54, "Detroit Lions" },
+                    { 55, "Detroit Pistons" },
+                    { 56, "Detroit Red Wings" },
+                    { 57, "Edmonton Oilers" },
+                    { 58, "Green Bay Packers" },
+                    { 59, "Houston Astros" },
+                    { 60, "Houston Texans" },
+                    { 61, "Houston Rockets" },
+                    { 62, "Houston Dynamo" },
+                    { 63, "Indianapolis Colts" },
+                    { 64, "Indiana Pacers" },
+                    { 65, "Jacksonville Jaguars" },
+                    { 66, "Kansas City Royals" },
+                    { 67, "Kansas City Chiefs" },
+                    { 68, "Sporting Kansas City" },
+                    { 69, "Las Vegas Raiders" },
+                    { 70, "Vegas Golden Knights" },
+                    { 71, "Los Angeles Dodgers" },
+                    { 72, "Los Angeles Angels" },
+                    { 73, "Los Angeles Rams" },
+                    { 74, "Los Angeles Chargers" },
+                    { 75, "Los Angeles Lakers" },
+                    { 76, "Los Angeles Clippers" },
+                    { 77, "LA Kings" },
+                    { 78, "Anaheim Ducks" },
+                    { 79, "LA Galaxy" },
+                    { 80, "LA FC" },
+                    { 81, "Memphis Grizzlies" },
+                    { 82, "Miami Marlins" },
+                    { 83, "Miami Dolphins" },
+                    { 84, "Miami Heat" },
+                    { 85, "Florida Panthers" },
+                    { 86, "Inter Miami" },
+                    { 87, "Minnesota Twins" },
+                    { 88, "Minnesota Vikings" },
+                    { 89, "Minnesota Timberwolves" },
+                    { 90, "Minnesota Wild" },
+                    { 91, "Minnesota United" },
+                    { 92, "Milwaukee Brewers" },
+                    { 93, "Milwaukee Bucks" },
+                    { 94, "Montreal Canadiens" },
+                    { 95, "Montreal Impact" },
+                    { 96, "Tennessee Titans" },
+                    { 97, "Nashville Predators" },
+                    { 98, "Nashville SC" },
+                    { 99, "New Orleans Saints" },
+                    { 100, "New Orleans Pelicans" },
+                    { 101, "New York Yankees" },
+                    { 102, "New York Mets" },
+                    { 103, "New York Giants" },
+                    { 104, "New York Jets" },
+                    { 105, "New York Knicks" },
+                    { 106, "Brooklyn Nets" },
+                    { 107, "New York Rangers" },
+                    { 108, "New York Islanders" },
+                    { 109, "New Jersey Devils" },
+                    { 110, "New York Red Bulls" },
+                    { 111, "New York City FC" },
+                    { 112, "Oakland A's" },
+                    { 113, "Oklahoma City Thunder" },
+                    { 114, "Ottawa Senators" },
+                    { 115, "Orlando Magic" },
+                    { 116, "Orlando City" },
+                    { 117, "Philadelphia Phillies" },
+                    { 118, "Philadelphia Eagles" },
+                    { 119, "Philadelphia 76ers" },
+                    { 120, "Philadelphia Flyers" },
+                    { 121, "Philadelphia Union" },
+                    { 122, "Arizona Diamondbacks" },
+                    { 123, "Arizona Cardinals" },
+                    { 124, "Phoenix Suns" },
+                    { 125, "Pittsburgh Pirates" },
+                    { 126, "Pittsburgh Steelers" },
+                    { 127, "Pittsburgh Penguins" },
+                    { 128, "Portland Trail Blazers" },
+                    { 129, "Portland Timbers" },
+                    { 130, "Carolina Hurricanes" },
+                    { 131, "Sacramento Kings" },
+                    { 132, "Utah Jazz" },
+                    { 133, "Real Salt Lake" },
+                    { 134, "San Antonio Spurs" },
+                    { 135, "San Diego Padres" },
+                    { 136, "San Francisco Giants" },
+                    { 137, "San Francisco 49ers" },
+                    { 138, "Golden State Warriors" },
+                    { 139, "San Jose Sharks" },
+                    { 140, "San Jose Earthquakes" },
+                    { 141, "St. Louis Cardinals" },
+                    { 142, "St. Louis Blues" },
+                    { 143, "St. Louis City FC" },
+                    { 144, "Seattle Mariners" },
+                    { 145, "Seattle Seahawks" },
+                    { 146, "Seattle Kraken" },
+                    { 147, "Seattle Sounders" },
+                    { 148, "Tampa Bay Rays" },
+                    { 149, "Tampa Bay Buccaneers" },
+                    { 150, "Tampa Bay Lightning" },
+                    { 151, "Toronto Blue Jays" },
+                    { 152, "Toronto Raptors" },
+                    { 153, "Toronto Maple Leafs" },
+                    { 154, "Toronto FC" },
+                    { 155, "Vancouver Canucks" },
+                    { 156, "Vancouver Whitecaps" },
+                    { 157, "Washington Nationals" },
+                    { 158, "Washington Commanders" },
+                    { 159, "Washington Wizards" },
+                    { 160, "Washington Capitals" },
+                    { 161, "DC United" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -404,9 +613,9 @@ namespace CardShop.Migrations
                 column: "SportId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cards_TypeId",
+                name: "IX_Cards_TeamId",
                 table: "Cards",
-                column: "TypeId");
+                column: "TeamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_CardId",
@@ -417,6 +626,11 @@ namespace CardShop.Migrations
                 name: "IX_Purchases_UserId",
                 table: "Purchases",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TypesOfCards_TypeId",
+                table: "TypesOfCards",
+                column: "TypeId");
         }
 
         /// <inheritdoc />
@@ -438,7 +652,13 @@ namespace CardShop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CardTypeTradingCard");
+
+            migrationBuilder.DropTable(
                 name: "Purchases");
+
+            migrationBuilder.DropTable(
+                name: "TypesOfCards");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -447,10 +667,10 @@ namespace CardShop.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Cards");
+                name: "CardTypes");
 
             migrationBuilder.DropTable(
-                name: "CardTypes");
+                name: "Cards");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");
@@ -460,6 +680,9 @@ namespace CardShop.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sports");
+
+            migrationBuilder.DropTable(
+                name: "Teams");
         }
     }
 }
