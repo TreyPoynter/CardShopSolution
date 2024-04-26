@@ -41,6 +41,14 @@
         @Html.ValidationMessageFor(m => m.Card.Number, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
+        <select class="form-select" asp-items="@(new SelectList(Model.Teams, "TeamId", "Name"))"
+                asp-for="Card.TeamId">
+            <option value="">-- Select a Team --</option>
+        </select>
+        @Html.LabelFor(m => m.Teams)
+        @Html.ValidationMessageFor(m => m.Card.TeamId, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Manufacturers, "ManufacturerId", "Name"))"
                 asp-for="Card.ManufactuererId">
         </select>
@@ -56,7 +64,7 @@
     </div>
     <div class="form-floating mb-3">
         <select class="form-select" asp-items="@(new SelectList(Model.Types, "TypeId", "Name"))"
-                asp-for="Card.SelectedTypeId">
+                asp-for="Card.SelectedTypeId" multiple style="height: 150px;">
         </select>
         @Html.LabelFor(m => m.Types)
         @Html.ValidationMessageFor(m => m.Card.SelectedTypeId, "", new { @class = "text-danger" })
