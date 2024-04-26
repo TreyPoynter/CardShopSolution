@@ -16,7 +16,8 @@
                     <p class="fs-5">@Model.Card.Price.Value.ToString("C")</p>
                     <p class="text-secondary">@Model.Card.Description</p>
                     <div class="mt-auto">
-                        <form asp-controller="Bag" asp-action="AddToBag">
+                        <form asp-controller="Bag" asp-action="AddToBag" method="post">
+                            <input hidden value="@Model.Card.Id" name="id" />
                             <button class="w-100 text-center btn btn-dark mb-3" type="submit">
                                 Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i>
                             </button>
