@@ -65,5 +65,20 @@ namespace CardShop.Controllers
             
             return View("Index", cardsCategoryVM);
         }
+
+        public IActionResult Details(int id)
+        {
+            TradingCard? card = _cardDb.Get(id);
+
+            if (card == null)
+                return View("NotFound");
+
+            TradingCardDetailsVM detailsVM = new()
+            {
+                Card = card
+            };
+
+            return View(detailsVM);
+        }
     }
 }
