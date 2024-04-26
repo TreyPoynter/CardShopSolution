@@ -82,6 +82,10 @@ namespace CardShop.Areas.Admin.Controllers
                     {
                         UnitAmountDecimal = cardVM.Card.Price * 100,
                         Currency = "USD"
+                    },
+                    Images = new List<string>()
+                    {
+                        $"https://fivestarsportscards.azurewebsites.net/images/{cardVM.Card.ImageName}"
                     }
                     /*
                      * (When we host live let's change the filePath to the URL)
