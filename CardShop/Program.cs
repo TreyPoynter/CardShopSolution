@@ -42,7 +42,7 @@ else
     app.UseHsts();
 }
 
-StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:ApiKey").Get<string>();
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("StripeAPI").Get<string>();
 
 app.UseSession();
 
