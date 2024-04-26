@@ -1,4 +1,6 @@
-﻿using CardShop.Models.Domain;
+﻿using CardShop.Data;
+using CardShop.Data.Repository;
+using CardShop.Models.Domain;
 using CardShop.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,13 +14,15 @@ namespace CardShop.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly Repository<Purchase> _purchaseDb;
 
         public AccountController(UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager)
+            RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, ApplicationDbContext ctx)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _purchaseDb = new Repository<Purchase>(ctx);
         }
 
         public IActionResult Login(string returnUrl)
@@ -132,6 +136,18 @@ namespace CardShop.Controllers
                 ModelState.AddModelError("", error.Description);
             }
             return View(model);
+        }
+
+        [Authorize]
+        public IActionResult Purchases()
+        {
+            IEnumerable<Purchase> purchases = _purchaseDb.List(new QueryOptions<Purchase>
+            {
+                Includes= "CardBought, Buyer",
+                Where = p => p.UserId == _userManager.GetUserId(User)
+            });
+
+            return View(purchases);
         }
 
         [Authorize]

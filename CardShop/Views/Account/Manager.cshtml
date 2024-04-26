@@ -9,6 +9,9 @@
         <li class="list-group-item">
             <a class="fs-4 text-decoration-none text-dark" asp-action="ChangePassword" asp-controller="Account">Change Password</a>
         </li>
+        <li class="list-group-item">
+            <a class="fs-4 text-decoration-none text-dark" asp-action="Purchases" asp-controller="Account">Past Purchases</a>
+        </li>
     </ul>
     @if (User.IsInRole("Admin"))
     {
