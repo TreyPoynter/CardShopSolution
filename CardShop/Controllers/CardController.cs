@@ -33,12 +33,12 @@ namespace CardShop.Controllers
             return View(cardsCategoryVM);
         }
 
-        [HttpPost]
-        public IActionResult Search(string search)
+        [HttpGet]
+        public IActionResult Search(string searchString)
         {
             CardCategoryVM cardsCategoryVM = new()
             {
-                Category = search,
+                Category = searchString,
                 Cards = _cardDb.List(new QueryOptions<TradingCard>()
                 {
                     OrderBy = c => c.Player,
@@ -48,16 +48,16 @@ namespace CardShop.Controllers
                 IsSearching = true
             };
             
-            if (!String.IsNullOrWhiteSpace(search))
+            if (!String.IsNullOrWhiteSpace(searchString))
             {
-                string[] searchTerms = search.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] searchTerms = searchString.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
                 cardsCategoryVM.Cards = cardsCategoryVM.Cards.Where(
-                c => c.Player.ContainsNoCase(search) ||
-                c.Description.ContainsNoCase(search) ||
-                c.Team.Name.ContainsNoCase(search) ||
+                c => c.Player.ContainsNoCase(searchString) ||
+                c.Description.ContainsNoCase(searchString) ||
+                c.Team.Name.ContainsNoCase(searchString) ||
                 c.Types.Count(t => searchTerms.Any(term => t.Name.ContainsNoCase(term))) > 0  ||
-                c.Manufacturer.Name.ContainsNoCase(search) ||
-                c.Sport.Name.ContainsNoCase(search));
+                c.Manufacturer.Name.ContainsNoCase(searchString) ||
+                c.Sport.Name.ContainsNoCase(searchString));
             }else
             {
                 cardsCategoryVM.IsSearching = false;
