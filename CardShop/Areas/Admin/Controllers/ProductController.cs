@@ -138,6 +138,7 @@ namespace CardShop.Areas.Admin.Controllers
                 updatedCard.ManufactuererId > 0 &&
                 updatedCard.SportId > 0 &&
                 updatedCard.TeamId > 0 &&
+                updatedCard.SelectedTypeId != null &&
                 updatedCard.SelectedTypeId.Count > 0 &&
                 updatedCard.QualityId > 0)
             {
