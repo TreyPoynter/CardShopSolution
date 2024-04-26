@@ -32,7 +32,6 @@ namespace CardShop.Areas.Admin.Controllers
             typeDb = new Repository<CardType>(ctx);
             teamDb = new Repository<Team>(ctx);
             webHostEnvironment = webHostEnv;
-
         }
 
         [Route("{area}/Products")]
@@ -111,7 +110,11 @@ namespace CardShop.Areas.Admin.Controllers
         [Route("{area}/Product/Manage/{id?}")]
         public IActionResult Manage(int id)
         {
-            TradingCard cardToEdit = cardDb.Get(id);
+            TradingCard? cardToEdit = cardDb.List(new QueryOptions<TradingCard>()
+            {
+                Includes = "Types"
+            }).FirstOrDefault(c => c.Id == id);
+
             string uploadDir = Path.Combine(webHostEnvironment.WebRootPath, "images");
             string filePath = Path.Combine(uploadDir, cardToEdit.ImageName);
             CardCreationVM cardVM = new CardCreationVM()
