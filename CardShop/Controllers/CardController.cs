@@ -51,7 +51,7 @@ namespace CardShop.Controllers
             if (!String.IsNullOrWhiteSpace(search))
             {
                 string[] searchTerms = search.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-                cardsCategoryVM.Cards = _cardDb.Search(
+                cardsCategoryVM.Cards = cardsCategoryVM.Cards.Where(
                 c => c.Player.ContainsNoCase(search) ||
                 c.Description.ContainsNoCase(search) ||
                 c.Team.Name.ContainsNoCase(search) ||
