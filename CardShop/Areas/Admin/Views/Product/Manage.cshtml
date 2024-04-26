@@ -63,8 +63,11 @@
         @Html.ValidationMessageFor(m => m.Card.SportId, "", new { @class = "text-danger" })
     </div>
     <div class="form-floating mb-3">
-        <select class="form-select" asp-items="@(new SelectList(Model.Types, "TypeId", "Name"))"
-                asp-for="Card.SelectedTypeId" multiple style="height: 150px;">
+        <select class="form-select" asp-for="Card.SelectedTypeId" multiple style="height: 150px;">
+            @foreach(CardType type in Model.Types)
+            {
+                <option value="@type.TypeId" selected="@(Model.Card.Types.Contains(type))">@type.Name</option>
+            }
         </select>
         @Html.LabelFor(m => m.Types)
         @Html.ValidationMessageFor(m => m.Card.SelectedTypeId, "", new { @class = "text-danger" })
