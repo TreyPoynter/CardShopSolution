@@ -4,24 +4,34 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6">
-            <div class="d-flex justify-content-center">
-                <img src="~/images/@Model.Card.ImageName" width="50%" />
+        <div class="row align-items-stretch">
+            <div class="col-md-6">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <img src="~/images/@Model.Card.ImageName" width="50%" />
+                </div>
             </div>
-            
-        </div>
-        <div class="col-md-6 mt-3">
-            <h3>@Model.Card.Player</h3>
-            <p class="text-secondary">@Model.Card.Description</p>
-            <div class="mt-auto">
-                <button class="w-100 text-center btn btn-dark mb-3">
-                    Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i>
-                </button>
-                <button class="btn btn-stripe w-100 d-flex justify-content-center">
-                        Checkout now with <i class="fa-brands fa-stripe"></i>
-                </button>
+            <div class="col-md-6 mt-3">
+                <div class="d-flex flex-column h-100 w-100">
+                    <h3>@Model.Card.Player</h3>
+                    <p class="fs-5">@Model.Card.Price.Value.ToString("C")</p>
+                    <p class="text-secondary">@Model.Card.Description</p>
+                    <div class="mt-auto">
+                        <form asp-controller="Bag" asp-action="AddToBag">
+                            <button class="w-100 text-center btn btn-dark mb-3" type="submit">
+                                Add to Bag <i class="fa-solid fa-bag-shopping ms-2"></i>
+                            </button>
+                        </form>
+                        <form asp-controller="Payment" asp-action="CheckoutNow">
+                            <input hidden value="@Model.Card.Id" name="cardId" />
+                            <button class="btn btn-stripe w-100 d-flex justify-content-center" type="submit">
+                                Checkout now with <i class="fa-brands fa-stripe"></i>
+                            </button>
+                        </form>
+                        
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
-    
 </div>
