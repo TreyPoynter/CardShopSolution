@@ -1,0 +1,46 @@
+﻿@model SearchVM<CardType>
+@{
+    ViewBag.Title = "Manage Teams";
+}
+
+<a class="fs-4" asp-action="Add" asp-controller="CardType" asp-area="Admin">Add Type</a>
+
+<div class="mt-3">
+    <form method="get" asp-action="Index" asp-controller="CardType">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search Teams..." name="searchString" asp-for="Search">
+            <button class="btn btn-dark" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+@if (Model.Search != String.Empty)
+{
+    <div>
+        <p>@Model.Items.Count() results for @Model.Search</p>
+    </div>
+}
+@if (Model.Items.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (CardType type in Model.Items)
+            {
+                <tr>
+                    <td class="">@type.Name</td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="CardType" asp-area="Admin" asp-route-id="@type.TypeId" class="btn btn-primary">Manage</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
