@@ -3,6 +3,8 @@
     ViewBag.Title = "Manage Teams";
 }
 
+<a class="fs-4" asp-action="Add" asp-controller="Team" asp-area="Admin">Add Team</a>
+
 <div class="mt-3">
     <form method="get" asp-action="Index" asp-controller="Team">
         <div class="input-group">
@@ -35,7 +37,7 @@
                 <tr>
                     <td class="">@team.Name</td>
                     <td>
-                        <a asp-action="Manage" asp-route-id="@team.TeamId" class="btn btn-primary">Manage</a>
+                        <a asp-action="Edit" asp-controller="Team" asp-area="Admin" asp-route-id="@team.TeamId" class="btn btn-primary">Manage</a>
                     </td>
                 </tr>
             }
