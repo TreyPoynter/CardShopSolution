@@ -13,3 +13,32 @@
         </div>
     </form>
 </div>
+
+@if (Model.Search != String.Empty)
+{
+    <div>
+        <p>@Model.Items.Count() results for @Model.Search</p>
+    </div>
+}
+@if (Model.Items.Count() > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Team team in Model.Items)
+            {
+                <tr>
+                    <td class="">@team.Name</td>
+                    <td>
+                        <a asp-action="Manage" asp-route-id="@team.TeamId" class="btn btn-primary">Manage</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
