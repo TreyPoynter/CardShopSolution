@@ -1,0 +1,15 @@
+﻿@model SearchVM<Team>
+@{
+    ViewBag.Title = "Manage Teams";
+}
+
+<div class="mt-3">
+    <form method="get" asp-action="Index" asp-controller="Team">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search Teams..." name="searchString" asp-for="Search">
+            <button class="btn btn-dark" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+</div>
