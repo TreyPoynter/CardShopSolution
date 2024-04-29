@@ -4,9 +4,9 @@
 }
 
 <div class="mt-3">
-    <form method="post" asp-route-search="@Model.Search">
+    <form method="get" asp-action="Index" asp-controller="Product">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Products..." asp-for="Search">
+            <input type="text" class="form-control" placeholder="Search Products..." name="searchString" asp-for="Search">
             <button class="btn btn-dark" type="submit">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>

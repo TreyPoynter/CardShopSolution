@@ -35,20 +35,20 @@ namespace CardShop.Areas.Admin.Controllers
         }
 
         [Route("{area}/Products")]
-        public IActionResult Index(string search = "")
+        public IActionResult Index(string searchString = "")
         {
             SearchVM<TradingCard> model = new SearchVM<TradingCard>()
             {
-                Search = search,
+                Search = searchString,
                 Items = cardDb.List(new QueryOptions<TradingCard>()
                 {
                     Includes = "Quality, Manufacturer, Sport"
                 })
             };
 
-            if(search != String.Empty)
-                model.Items = model.Items.Where(c => c.Sport.Name.ContainsNoCase(search) ||
-                    c.Player.ContainsNoCase(search)).ToList();
+            if(searchString != String.Empty)
+                model.Items = model.Items.Where(c => c.Sport.Name.ContainsNoCase(searchString) ||
+                    c.Player.ContainsNoCase(searchString)).ToList();
 
             return View(model);
         }
