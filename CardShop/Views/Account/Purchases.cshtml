@@ -13,9 +13,22 @@
         <h2 class="display-3 text-center">Past Purchases</h2>
         foreach(Purchase purchase in Model)
         {
-            <div>
-                @purchase.CardBought.Player
-                @purchase.Total.ToString("C")
+            <div class="bag-item">
+                <img src="~/images/@purchase.CardBought.ImageName" width="100px" />
+                <div class="w-50">
+                    <div>
+                        <p class="item-name">@purchase.CardBought.Player - @purchase.CardBought.Price.Value.ToString("C") / ea</p>
+                        <p class="item-description">@purchase.CardBought.Description</p>
+                        <div class="mt-auto">
+                            Total (USD) : @purchase.Total.ToString("C")
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end w-100">
+                    <div class="mt-auto me-5">
+                        
+                    </div>
+                </div>
             </div>
         }
     }
