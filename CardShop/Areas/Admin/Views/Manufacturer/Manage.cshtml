@@ -10,6 +10,7 @@
         <input class="form-control" placeholder="" asp-for="Item.Name"/>
         <label>Manufacturer Name</label>
     </div>
+    <span class="text-danger" asp-validation-for="Item.Name"></span>
     <input hidden asp-for="@Model.Item.ManufacturerId" />
     <div class="d-flex mt-2">
         <button class="btn btn-primary">Save Changes</button>
