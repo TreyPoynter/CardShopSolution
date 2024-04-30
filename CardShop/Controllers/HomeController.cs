@@ -1,16 +1,21 @@
+using CardShop.Data;
+using CardShop.Data.Repository;
 using CardShop.Models;
+using CardShop.Models.Domain;
+using CardShop.Models.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace CardShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly Repository<Sport> sportDb;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext ctx)
         {
-            _logger = logger;
+            sportDb = new Repository<Sport>(ctx);
         }
 
         public IActionResult Index()
@@ -18,15 +23,11 @@ namespace CardShop.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult GetSports()
         {
-            return View();
+            IEnumerable<Sport> sports = sportDb.List(new QueryOptions<Sport>());
+            return Content(JsonSerializer.Serialize(sports));
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
