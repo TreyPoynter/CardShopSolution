@@ -13,6 +13,10 @@
     display: block;
 }
 
+#fixed-middle-nav {
+    display: none;
+}
+
 a.dropdown-item {
     text-transform: uppercase;
     font-weight: 600;
@@ -52,11 +56,12 @@ a.dropdown-item {
 }
 @media only screen and (min-width: 768px) {
 
-    .fixed-middle-nav {
+    #fixed-middle-nav {
         position: fixed;
         top: 0;
         width: 100%;
         z-index: 1000;
+        display: block;
     }
 
     .invisible {
