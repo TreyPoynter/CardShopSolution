@@ -11,6 +11,15 @@ html {
     font-size: 5rem;
 }
 
+.contact-tag {
+    color: #000;
+    text-decoration: none;
+}
+.contact-tag:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
 
 .field-validation-error {
     color: #dc3545;
