@@ -21,7 +21,7 @@ namespace CardShop.Controllers
         {
             CardCategoryVM cardsCategoryVM = new()
             {
-                Category = id.Capitalize(),
+                Category = id.Length > 3 ? id.Capitalize() : id.ToUpper(),
                 Cards = _cardDb.List(new QueryOptions<TradingCard>()
                 {
                     OrderBy = c => c.Player,
