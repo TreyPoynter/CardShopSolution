@@ -33,6 +33,9 @@
 }
 
 .quantity-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
     color: #f8f9fa;
     background-color: #00ac5b;
@@ -42,6 +45,7 @@
     font-size: 16px; /* Adjust font size as needed */
     cursor: pointer;
 }
+
 
 .item-amt {
     display: flex;
