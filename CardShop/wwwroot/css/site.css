@@ -44,6 +44,10 @@ body {
         background-color: #00df76;
         border-color: #00df76;
     }
+    .btn-primary:focus {
+        background-color: #00df76;
+        border-color: #00df76;
+    }
 
 .btn-secondary {
     background-color: #276459;
@@ -56,6 +60,10 @@ body {
 
 }
     .btn-secondary:hover {
+        background-color: #2e8575;
+        border-color: #2e8575;
+    }
+    .btn-secondary:focus {
         background-color: #2e8575;
         border-color: #2e8575;
     }
