@@ -25,7 +25,10 @@ namespace CardShop.Controllers
 
         public IActionResult GetSports()
         {
-            IEnumerable<Sport> sports = sportDb.List(new QueryOptions<Sport>());
+            IEnumerable<Sport> sports = sportDb.List(new QueryOptions<Sport>()
+            {
+                OrderBy = c => c.Name
+            });
             return Content(JsonSerializer.Serialize(sports));
         }
 
