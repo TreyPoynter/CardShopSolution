@@ -157,8 +157,10 @@
                     <div class="row justify-content-between">
                         <div class="col-md-4">
                             <div class="dropdown w-100">
-                                <button id="categories" class="btn btn-dark dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                    <i class="fa-solid fa-layer-group me-2"></i>
+                                <button id="categories" class="btn btn-dark dropdown-toggle w-100 d-flex align-items-center justify-content-center" type="button" data-bs-toggle="dropdown">
+                                    <svg class="w-6 h-6 text-gray-800 me-2 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6Zm4.996 2a1 1 0 0 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM11 8a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-6Zm-4.004 3a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM11 11a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-6Zm-4.004 3a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM11 14a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-6Z" clip-rule="evenodd" />
+                                    </svg>
                                     Categories
                                 </button>
                                 <ul class="dropdown-menu w-50" id="nav-dropdown">
@@ -170,8 +172,10 @@
                             <form asp-action="Search" asp-controller="Card" method="get" class="w-100">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="searchString" placeholder="Search Products...">
-                                    <button class="btn btn-dark" type="submit">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    <button class="btn btn-dark d-flex" type="submit">
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                                        </svg>
                                     </button>
                                 </div>
                             </form>
