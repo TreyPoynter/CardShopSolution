@@ -14,7 +14,7 @@ namespace CardShop.Data.Configurations
                 new CardType() { TypeId = 1, Name = "Base"},
                 new CardType() { TypeId = 2, Name = "Rookie"},
                 new CardType() { TypeId = 3, Name = "Insert"},
-                new CardType() { TypeId = 4, Name = "Autograph"},
+                new CardType() { TypeId = 4, Name = "Autographed"},
                 new CardType() { TypeId = 5, Name = "Relic"},
                 new CardType() { TypeId = 6, Name = "Parallel"},
                 new CardType() { TypeId = 7, Name = "Memorabillia"},

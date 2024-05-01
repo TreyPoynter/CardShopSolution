@@ -25,8 +25,8 @@ namespace CardShop.Controllers
                 Cards = _cardDb.List(new QueryOptions<TradingCard>()
                 {
                     OrderBy = c => c.Player,
-                    Where = c => c.Sport.Name == id && c.IsForSale,
-                    Includes = "Types, Quality, Manufacturer, Sport, Team"
+                    Includes = "Types, Quality, Manufacturer, Sport, Team",
+                    Where = c => c.Sport.Name == id || c.Types.Any(t => t.Name.ToLower() == id) && c.IsForSale
                 })
             };
 
