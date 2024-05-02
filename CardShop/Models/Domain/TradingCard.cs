@@ -20,7 +20,6 @@ namespace CardShop.Models.Domain
         [Required]
         [NotMapped]
         public List<int>? SelectedTypeId { get; set; }
-        [ForeignKey("TypeId")]
         public ICollection<CardType> Types { get; set; }
         [Required(ErrorMessage = "A Card Number is required")]
         public uint? Number { get; set; }

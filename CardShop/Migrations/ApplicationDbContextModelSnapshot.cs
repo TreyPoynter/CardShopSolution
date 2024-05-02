@@ -31,6 +31,7 @@ namespace CardShop.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeId"));
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TypeId");
@@ -56,7 +57,7 @@ namespace CardShop.Migrations
                         new
                         {
                             TypeId = 4,
-                            Name = "Autograph"
+                            Name = "Autographed"
                         },
                         new
                         {
@@ -99,6 +100,7 @@ namespace CardShop.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ManufacturerId"));
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ManufacturerId");
@@ -193,6 +195,7 @@ namespace CardShop.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QualityId"));
 
                     b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("QualityId");
@@ -251,6 +254,7 @@ namespace CardShop.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SportId"));
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SportId");
@@ -309,6 +313,7 @@ namespace CardShop.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"));
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TeamId");
@@ -1219,10 +1224,10 @@ namespace CardShop.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TypeId")
+                    b.Property<int>("CardsId")
                         .HasColumnType("int");
 
-                    b.HasKey("CardId", "TypeId");
+                    b.HasKey("CardId", "CardsId");
 
                     b.ToTable("CardTypeTradingCard");
                 });

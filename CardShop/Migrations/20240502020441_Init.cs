@@ -60,7 +60,7 @@ namespace CardShop.Migrations
                 {
                     TypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,11 +72,11 @@ namespace CardShop.Migrations
                 columns: table => new
                 {
                     CardId = table.Column<int>(type: "int", nullable: false),
-                    TypeId = table.Column<int>(type: "int", nullable: false)
+                    CardsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CardTypeTradingCard", x => new { x.CardId, x.TypeId });
+                    table.PrimaryKey("PK_CardTypeTradingCard", x => new { x.CardId, x.CardsId });
                 });
 
             migrationBuilder.CreateTable(
@@ -85,7 +85,7 @@ namespace CardShop.Migrations
                 {
                     ManufacturerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +98,7 @@ namespace CardShop.Migrations
                 {
                     QualityId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,7 +111,7 @@ namespace CardShop.Migrations
                 {
                     SportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -124,7 +124,7 @@ namespace CardShop.Migrations
                 {
                     TeamId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -344,7 +344,7 @@ namespace CardShop.Migrations
                     { 1, "Base" },
                     { 2, "Rookie" },
                     { 3, "Insert" },
-                    { 4, "Autograph" },
+                    { 4, "Autographed" },
                     { 5, "Relic" },
                     { 6, "Parallel" },
                     { 7, "Memorabillia" },
