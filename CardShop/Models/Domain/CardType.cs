@@ -8,7 +8,6 @@ namespace CardShop.Models.Domain
         public int TypeId { get; set; }
         [Required]
         public string? Name { get; set; }
-        [ForeignKey("CardId")]
         public ICollection<TradingCard> Cards { get; set; }
 
         public CardType()

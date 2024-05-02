@@ -68,18 +68,6 @@ namespace CardShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CardTypeTradingCard",
-                columns: table => new
-                {
-                    CardId = table.Column<int>(type: "int", nullable: false),
-                    CardsId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CardTypeTradingCard", x => new { x.CardId, x.CardsId });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Manufacturers",
                 columns: table => new
                 {
@@ -238,6 +226,26 @@ namespace CardShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Purchases",
+                columns: table => new
+                {
+                    PurchaseId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    DatePurchased = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Purchases", x => x.PurchaseId);
+                    table.ForeignKey(
+                        name: "FK_Purchases_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
                 {
@@ -287,29 +295,27 @@ namespace CardShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Purchases",
+                name: "PurchasedCards",
                 columns: table => new
                 {
-                    PurchaseId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CardId = table.Column<int>(type: "int", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    PurchaseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Purchases", x => x.PurchaseId);
+                    table.PrimaryKey("PK_PurchasedCards", x => new { x.CardId, x.PurchaseId });
                     table.ForeignKey(
-                        name: "FK_Purchases_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Purchases_Cards_CardId",
+                        name: "FK_PurchasedCards_Cards_CardId",
                         column: x => x.CardId,
                         principalTable: "Cards",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PurchasedCards_Purchases_PurchaseId",
+                        column: x => x.PurchaseId,
+                        principalTable: "Purchases",
+                        principalColumn: "PurchaseId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -618,9 +624,9 @@ namespace CardShop.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Purchases_CardId",
-                table: "Purchases",
-                column: "CardId");
+                name: "IX_PurchasedCards_PurchaseId",
+                table: "PurchasedCards",
+                column: "PurchaseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Purchases_UserId",
@@ -652,10 +658,7 @@ namespace CardShop.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CardTypeTradingCard");
-
-            migrationBuilder.DropTable(
-                name: "Purchases");
+                name: "PurchasedCards");
 
             migrationBuilder.DropTable(
                 name: "TypesOfCards");
@@ -664,13 +667,16 @@ namespace CardShop.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Purchases");
 
             migrationBuilder.DropTable(
                 name: "CardTypes");
 
             migrationBuilder.DropTable(
                 name: "Cards");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");

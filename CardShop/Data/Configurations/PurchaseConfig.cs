@@ -8,8 +8,7 @@ namespace CardShop.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Purchase> builder)
         {
-            builder.HasOne(p => p.CardBought)
-                .WithMany(c => c.Purchases);
+            builder.HasKey(p => p.PurchaseId);
 
             builder.HasOne(p => p.Buyer)
                 .WithMany(u => u.Purchases);

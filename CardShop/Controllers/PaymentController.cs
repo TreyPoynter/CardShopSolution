@@ -28,20 +28,23 @@ namespace CardShop.Controllers
             List<CartItem> cartItems = HttpContext.Session.Get<List<CartItem>>("MyBag") ?? new List<CartItem>();
             if(cartItems.Count > 0)
             {
+                Purchase newPurchase = new Purchase()
+                {
+                    UserId = userManager.GetUserId(User),
+                };
+                purchaseDb.Add(newPurchase);
+                purchaseDb.Save();
                 foreach (var item in cartItems)
                 {
-                    Purchase newPurchase = new()
+                    for (int amt = 0; amt < item.Amount; amt++)
                     {
-                        UserId = userManager.GetUserId(User),
-                        CardId = item.TradingCard.Id,
-                        Total = (decimal)item.TradingCard.Price * item.Amount
-                    };
-                    purchaseDb.Add(newPurchase);
-                    purchaseDb.Save();
+                        newPurchase.CardsBought.Add(item.TradingCard);
+                        newPurchase.Total += (decimal)item.TradingCard.Price;
+                    }
                 }
+                purchaseDb.Save();
             }
             
-
             HttpContext.Session.Set("MyBag", new List<CartItem>());
             return View();
         }

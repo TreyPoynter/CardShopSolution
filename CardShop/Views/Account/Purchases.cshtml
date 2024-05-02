@@ -13,23 +13,24 @@
         <h2 class="display-3 text-center">Past Purchases</h2>
         foreach(Purchase purchase in Model)
         {
-            <div class="bag-item">
-                <img src="~/images/@purchase.CardBought.ImageName" width="100px" />
-                <div class="w-50">
-                    <div class="">
-                        <p class="item-name">@purchase.CardBought.Player - @purchase.CardBought.Price.Value.ToString("C") / ea</p>
-                        <p class="item-description">@purchase.CardBought.Description</p>
-                        <div class="mt-auto">
-                            Total (USD) : @purchase.Total.ToString("C")
+            <h3 class="mt-2">Purchase on @purchase.DatePurchased.ToString("MMMM / dd / yyyy hh:mm tt") : @purchase.Total.ToString("C")</h3>
+            foreach (TradingCard cardBought in purchase.CardsBought)
+            {
+                <div class="bag-item">
+                    <img src="~/images/@cardBought.ImageName" width="100px" />
+                    <div class="w-50">
+                        <div class="">
+                            <p class="item-name">@cardBought.Player - @cardBought.Price.Value.ToString("C") / ea</p>
+                            <p class="item-description">@cardBought.Description</p>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end w-100">
+                        <div class="mt-auto me-5">
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-end w-100">
-                    <div class="mt-auto me-5">
-                        
-                    </div>
-                </div>
-            </div>
+            }
+            
         }
     }
 </div>

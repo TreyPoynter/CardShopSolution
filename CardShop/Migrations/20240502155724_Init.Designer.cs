@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240502020441_Init")]
+    [Migration("20240502155724_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -171,8 +171,8 @@ namespace CardShop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseId"));
 
-                    b.Property<int>("CardId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DatePurchased")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
@@ -181,8 +181,6 @@ namespace CardShop.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PurchaseId");
-
-                    b.HasIndex("CardId");
 
                     b.HasIndex("UserId");
 
@@ -1222,19 +1220,6 @@ namespace CardShop.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("CardTypeTradingCard", b =>
-                {
-                    b.Property<int>("CardId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CardsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CardId", "CardsId");
-
-                    b.ToTable("CardTypeTradingCard");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1368,6 +1353,21 @@ namespace CardShop.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("PurchasedCards", b =>
+                {
+                    b.Property<int>("CardId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CardId", "PurchaseId");
+
+                    b.HasIndex("PurchaseId");
+
+                    b.ToTable("PurchasedCards");
+                });
+
             modelBuilder.Entity("TypesOfCards", b =>
                 {
                     b.Property<int>("CardId")
@@ -1385,19 +1385,11 @@ namespace CardShop.Migrations
 
             modelBuilder.Entity("CardShop.Models.Domain.Purchase", b =>
                 {
-                    b.HasOne("CardShop.Models.Domain.TradingCard", "CardBought")
-                        .WithMany("Purchases")
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CardShop.Models.Domain.User", "Buyer")
                         .WithMany("Purchases")
                         .HasForeignKey("UserId");
 
                     b.Navigation("Buyer");
-
-                    b.Navigation("CardBought");
                 });
 
             modelBuilder.Entity("CardShop.Models.Domain.TradingCard", b =>
@@ -1486,6 +1478,21 @@ namespace CardShop.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PurchasedCards", b =>
+                {
+                    b.HasOne("CardShop.Models.Domain.TradingCard", null)
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CardShop.Models.Domain.Purchase", null)
+                        .WithMany()
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TypesOfCards", b =>
                 {
                     b.HasOne("CardShop.Models.Domain.TradingCard", null)
@@ -1499,11 +1506,6 @@ namespace CardShop.Migrations
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("CardShop.Models.Domain.TradingCard", b =>
-                {
-                    b.Navigation("Purchases");
                 });
 
             modelBuilder.Entity("CardShop.Models.Domain.User", b =>

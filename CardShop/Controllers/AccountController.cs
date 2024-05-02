@@ -143,7 +143,7 @@ namespace CardShop.Controllers
         {
             IEnumerable<Purchase> purchases = _purchaseDb.List(new QueryOptions<Purchase>
             {
-                Includes= "CardBought, Buyer",
+                Includes= "CardsBought, Buyer",
                 Where = p => p.UserId == _userManager.GetUserId(User)
             });
 
