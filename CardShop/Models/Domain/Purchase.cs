@@ -8,13 +8,13 @@ namespace CardShop.Models.Domain
         public string? UserId { get; set; }
         [ForeignKey(nameof(UserId))]
         public User? Buyer { get; set; }
-        public ICollection<TradingCard> CardsBought { get; set; }
+        public ICollection<CardPurchase> CardPurchases { get; set; }
         public DateTime DatePurchased { get; set; } = DateTime.Now;
         public decimal Total { get; set; }
 
         public Purchase()
         {
-            CardsBought = new List<TradingCard>();
+            CardPurchases = new List<CardPurchase>();
         }
     }
 }

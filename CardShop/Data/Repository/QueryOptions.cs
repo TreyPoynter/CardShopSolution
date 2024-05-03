@@ -13,6 +13,7 @@ namespace CardShop.Data.Repository
 
         public string Includes { 
             set => _includes = value.Replace(" ", "").Split(',');}
+
         public string[] GetIncludes() => _includes;
 
         public bool HasOrderBy => OrderBy != null;

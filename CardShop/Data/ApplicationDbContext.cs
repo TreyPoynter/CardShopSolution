@@ -19,6 +19,7 @@ namespace CardShop.Data
         public DbSet<CardType> CardTypes { get; set; }
         public DbSet<Quality> Qualities { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<CardPurchase> CardPurchases { get; set; }
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Team> Teams { get; set; }
 
@@ -33,6 +34,7 @@ namespace CardShop.Data
             builder.ApplyConfiguration(new ManufacturerConfig());
             builder.ApplyConfiguration(new SportConfig());
             builder.ApplyConfiguration(new TeamConfig());
+            builder.ApplyConfiguration(new CardPurchaseConfig());
         }
     }
 }

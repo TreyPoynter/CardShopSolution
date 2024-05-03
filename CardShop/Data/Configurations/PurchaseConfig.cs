@@ -10,6 +10,9 @@ namespace CardShop.Data.Configurations
         {
             builder.HasKey(p => p.PurchaseId);
 
+            builder.HasMany(p => p.CardPurchases)
+                .WithOne(p => p.Purchase);
+
             builder.HasOne(p => p.Buyer)
                 .WithMany(u => u.Purchases);
         }

@@ -14,7 +14,7 @@ namespace CardShop.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly Repository<Purchase> _purchaseDb;
+        private readonly Repository<CardPurchase> _purchaseDb;
 
         public AccountController(UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager, SignInManager<User> signInManager, ApplicationDbContext ctx)
@@ -22,7 +22,7 @@ namespace CardShop.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
-            _purchaseDb = new Repository<Purchase>(ctx);
+            _purchaseDb = new Repository<CardPurchase>(ctx);
         }
 
         public IActionResult Login(string returnUrl)
@@ -141,10 +141,10 @@ namespace CardShop.Controllers
         [Authorize]
         public IActionResult Purchases()
         {
-            IEnumerable<Purchase> purchases = _purchaseDb.List(new QueryOptions<Purchase>
+            IEnumerable<CardPurchase> purchases = _purchaseDb.List(new QueryOptions<CardPurchase>
             {
-                Includes= "CardsBought, Buyer",
-                Where = p => p.UserId == _userManager.GetUserId(User)
+                Includes = "Purchase, TradingCard",
+                Where = p => p.Purchase.UserId == _userManager.GetUserId(User)
             });
 
             return View(purchases);

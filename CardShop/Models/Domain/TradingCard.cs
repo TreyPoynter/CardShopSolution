@@ -48,7 +48,7 @@ namespace CardShop.Models.Domain
         [ForeignKey(nameof(TeamId))]
         [ValidateNever]
         public Team Team { get; set; }
-        public IEnumerable<Purchase> Purchases { get; set; }
+        public IEnumerable<CardPurchase> CardPurchases { get; set; }
         [ValidateNever]
         public string ProductId { get; set; } = String.Empty;
         [ValidateNever]
@@ -60,7 +60,7 @@ namespace CardShop.Models.Domain
         public TradingCard()
         {
             Description = String.Empty;
-            Purchases = new List<Purchase>();
+            CardPurchases = new List<CardPurchase>();
             Types = new List<CardType>();
         }
     }

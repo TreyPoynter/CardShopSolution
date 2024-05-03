@@ -36,11 +36,14 @@ namespace CardShop.Controllers
                 purchaseDb.Save();
                 foreach (var item in cartItems)
                 {
-                    for (int amt = 0; amt < item.Amount; amt++)
+                    newPurchase.CardPurchases.Add(new CardPurchase()
                     {
-                        newPurchase.CardsBought.Add(item.TradingCard);
-                        newPurchase.Total += (decimal)item.TradingCard.Price;
-                    }
+                        CardPurchaseId = 0,
+                        TradingCardId = item.TradingCard.Id,
+                        PurchaseId = newPurchase.PurchaseId,
+                        Quantity = item.Amount
+                    });
+                    newPurchase.Total += (decimal)item.TradingCard.Price;
                 }
                 purchaseDb.Save();
             }

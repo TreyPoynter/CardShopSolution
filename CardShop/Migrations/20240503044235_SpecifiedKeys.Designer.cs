@@ -4,6 +4,7 @@ using CardShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CardShop.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240503044235_SpecifiedKeys")]
+    partial class SpecifiedKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace CardShop.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CardPurchasePurchase", b =>
-                {
-                    b.Property<int>("CardPurchasesCardPurchaseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchasesPurchaseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CardPurchasesCardPurchaseId", "PurchasesPurchaseId");
-
-                    b.HasIndex("PurchasesPurchaseId");
-
-                    b.ToTable("CardPurchasePurchase");
-                });
 
             modelBuilder.Entity("CardShop.Models.Domain.CardPurchase", b =>
                 {
@@ -55,6 +43,8 @@ namespace CardShop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CardPurchaseId");
+
+                    b.HasIndex("PurchaseId");
 
                     b.HasIndex("TradingCardId");
 
@@ -1404,28 +1394,21 @@ namespace CardShop.Migrations
                     b.ToTable("TypesOfCards");
                 });
 
-            modelBuilder.Entity("CardPurchasePurchase", b =>
-                {
-                    b.HasOne("CardShop.Models.Domain.CardPurchase", null)
-                        .WithMany()
-                        .HasForeignKey("CardPurchasesCardPurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CardShop.Models.Domain.Purchase", null)
-                        .WithMany()
-                        .HasForeignKey("PurchasesPurchaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CardShop.Models.Domain.CardPurchase", b =>
                 {
+                    b.HasOne("CardShop.Models.Domain.Purchase", "Purchase")
+                        .WithMany("CardPurchases")
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CardShop.Models.Domain.TradingCard", "TradingCard")
                         .WithMany("CardPurchases")
                         .HasForeignKey("TradingCardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Purchase");
 
                     b.Navigation("TradingCard");
                 });
@@ -1538,6 +1521,11 @@ namespace CardShop.Migrations
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CardShop.Models.Domain.Purchase", b =>
+                {
+                    b.Navigation("CardPurchases");
                 });
 
             modelBuilder.Entity("CardShop.Models.Domain.TradingCard", b =>
