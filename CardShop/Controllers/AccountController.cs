@@ -146,8 +146,12 @@ namespace CardShop.Controllers
                 Includes = "Purchase, TradingCard",
                 Where = p => p.Purchase.UserId == _userManager.GetUserId(User)
             });
+            CardPurchaseVM purchaseVM = new()
+            {
+                GroupedPurchases = purchases.GroupBy(cp => cp.Purchase)
+            };
 
-            return View(purchases);
+            return View(purchaseVM);
         }
 
         [Authorize]
