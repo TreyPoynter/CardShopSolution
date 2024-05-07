@@ -43,7 +43,7 @@ namespace CardShop.Controllers
                         PurchaseId = newPurchase.PurchaseId,
                         Quantity = item.Amount
                     });
-                    newPurchase.Total += (decimal)item.TradingCard.Price * item.Amount;
+                    newPurchase.Total += (decimal)item.TradingCard.Price;
                 }
                 purchaseDb.Save();
             }

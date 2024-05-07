@@ -1,33 +1,29 @@
-﻿@model CardPurchaseVM
+﻿@model IEnumerable<CardPurchase>
 @{
     ViewBag.Title = "Past Purchases";
 }
 
 <div class="container">
-    @if (!Model.GroupedPurchases.Any()) @*Check if it has any purchases*@
+    @if (Model.Count() < 1)
     {
         <h3 class="text-center mt-3">No Purchases...</h3>
     }
     else
     {
         <h2 class="display-3 text-center">Past Purchases</h2>
-        foreach(var purchaseGroup in Model.GroupedPurchases)
+        foreach(CardPurchase purchase in Model)
         {
-            <h3 class="mt-2">Purchase on @purchaseGroup.Key.DatePurchased.ToString("MMMM / dd / yyyy hh:mm tt") : @purchaseGroup.Key.Total.ToString("C")</h3>
-            @foreach(var cardPurchase in purchaseGroup)
-            {
-                <div class="bag-item">
-                    <img src="~/images/@cardPurchase.TradingCard.ImageName" width="100px" />
-                    <div class="w-100 d-flex flex-column">
-                        <div>
-                            <p class="item-name">@cardPurchase.TradingCard.Player - @cardPurchase.TradingCard.Price.Value.ToString("C") / ea</p>
-                            <p class="item-description">@cardPurchase.TradingCard.Description</p>
-                        </div>
-                        <p class="mt-auto mb-0">Qty : @cardPurchase.Quantity</p>
+            <h3 class="mt-2">Purchase on @purchase.Purchase.DatePurchased.ToString("MMMM / dd / yyyy hh:mm tt") : @purchase.Purchase.Total.ToString("C")</h3>
+            <div class="bag-item">
+                <img src="~/images/@purchase.TradingCard.ImageName" width="100px" />
+                <div class="w-100 d-flex flex-column">
+                    <div>
+                        <p class="item-name">@purchase.TradingCard.Player - @purchase.TradingCard.Price.Value.ToString("C") / ea</p>
+                        <p class="item-description">@purchase.TradingCard.Description</p>
                     </div>
+                    <p class="mt-auto mb-0">Qty : @purchase.Quantity</p>
                 </div>
-            }
-            
+            </div>
             
 
             
