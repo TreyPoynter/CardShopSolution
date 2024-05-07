@@ -22,7 +22,7 @@ namespace CardShop.Models.Domain
         public List<int>? SelectedTypeId { get; set; }
         public ICollection<CardType> Types { get; set; }
         [Required(ErrorMessage = "A Card Number is required")]
-        public uint? Number { get; set; }
+        public string? Number { get; set; }
         [ValidateNever]
         public string? ImageName { get; set; }
         [Required(ErrorMessage = "A Year is required")]
