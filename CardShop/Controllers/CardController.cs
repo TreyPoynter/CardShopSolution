@@ -26,7 +26,7 @@ namespace CardShop.Controllers
                 {
                     OrderBy = c => c.Player,
                     Includes = "Types, Quality, Manufacturer, Sport, Team",
-                    Where = c => c.Sport.Name == id || c.Types.Any(t => t.Name.ToLower() == id) && c.IsForSale
+                    Where = c =>  c.Sport.Name.ToUpper() == id.ToUpper() || c.Types.Any(t => t.Name.ToLower() == id) && c.IsForSale == true
                 })
             };
 

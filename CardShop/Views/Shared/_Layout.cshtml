@@ -218,7 +218,7 @@
                         var sport = sports[i];
                         var liElement = document.createElement("li");
                         var aElement = document.createElement("a");
-                        aElement.setAttribute("href", "/cards/" + sport.Name);
+                        aElement.setAttribute("href", "/cards/" + sport.Name.toLowerCase());
                         aElement.setAttribute("class", "dropdown-item");
                         aElement.textContent = sport.Name;
                         liElement.appendChild(aElement);

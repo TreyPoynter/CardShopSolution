@@ -1,21 +1,11 @@
 {
   "dependencies": {
-    "mssql2": {
-      "ignored": "true",
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:DatabaseConnection"
-    },
-    "mssql1": {
-      "ignored": "true",
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:DefaultConnection"
-    },
     "mssql3": {
-      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/fivestarsportscards/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsFSSCDatabase_3CCB98AA7A",
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/fivestarsportscards/providers/Microsoft.ServiceLinker/linkers/ConnectionStrings_C2EB9AEDFA",
       "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/fivestarsportscardserver/databases/FiveStarSportsCards_db",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/cardshopdbserver/databases/FiveStarSportsCards_db",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:FSSCDatabase"
+      "connectionId": "ConnectionStrings"
     }
   }
 }
